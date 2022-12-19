@@ -1,0 +1,271 @@
+@use "../../style/Utils/breakpoints" as *;
+
+
+// Change Theming Material
+
+@use "@angular/material" as mat;
+@include mat.core();
+
+$my-blue: (
+  50 : #e6e8ea,
+  100 : #c0c5cb,
+  200 : #969fa8,
+  300 : #6b7885,
+  400 : #4c5b6a,
+  500 : #2c3e50,
+  600 : #273849,
+  700 : #213040,
+  800 : #1b2837,
+  900 : #101b27,
+  A100 : #68abff,
+  A200 : #358fff,
+  A400 : #0272ff,
+  A700 : #0067e7,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+$my-orange: (
+  50 : #fcf7e9,
+  100 : #f6ecc7,
+  200 : #f1e0a2,
+  300 : #ebd37c,
+  400 : #e6c960,
+  500 : #e2c044,
+  600 : #dfba3e,
+  700 : #dab235,
+  800 : #d6aa2d,
+  900 : #cf9c1f,
+  A100 : #ffffff,
+  A200 : #fff1d3,
+  A400 : #ffe2a0,
+  A700 : #ffda86,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$my-primary: mat.define-palette($my-blue);
+$my-accent: mat.define-palette($my-orange);
+$my-warn: mat.define-palette(mat.$indigo-palette);
+
+$my-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $my-primary,
+        accent: $my-accent,
+        warn: $my-accent,
+      ),
+    ),
+);
+
+@include mat.all-component-themes($my-theme);
+
+
+// Init Project
+
+
+*,::after, ::before {
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+:root {
+    --primary: #2C3E50;
+    --secondary: #E2C044;
+    --background-ligh: #F5F5F5;
+    --alert: #FF0000;
+    --color_text-button: #FFFFFF;
+}
+
+
+
+//utils
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: auto;
+  height: 100vh;
+  background-color: transparent;
+}
+
+.d-none {
+  display: none;
+}
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-justify-content-center {
+  justify-content: center;
+}
+
+.flex-justify-content-between {
+  justify-content: space-between;
+}
+
+.flex-align-items-center {
+  align-items: center;
+}
+
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+
+.w100 {
+  width: 100%;
+}
+
+.h100 {
+  height: 100%;
+}
+.maxW1440 {
+  max-width: 1440px;
+}
+
+.p-10 {
+  padding: 10px;
+}
+.p-15 {
+  padding: 15px;
+}
+.p-20 {
+  padding: 20px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
+.m-10 {
+  margin: 10px;
+}
+
+.m-20 {
+  margin: 20px;
+}
+
+.m-auto {
+  margin: 0 auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+.ml-0 {
+  margin-left: 0;
+}
+.ml-5 {
+  margin-left: 5px;
+}
+.ml-10 {
+  margin-left: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.fw-300 {
+  font-weight: 300;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+.mb-50 {
+  margin-bottom: 30px;
+}
+
+.fs-40 {
+  font-size: 40px;
+}
+.fs-30 {
+  font-size: 30px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+.fs-20 {
+  font-size: 20px;
+}
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+.fs-10 {
+  font-size: 10px;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-300 {
+  font-weight: 300;
+}

@@ -22,7 +22,10 @@
       "es2020",
       "dom"
     ]
-  },
+  },"exclude": [
+  "./cypress.config.ts"
+],
+  "include": ["src/**/*"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
