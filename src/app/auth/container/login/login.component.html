@@ -26,8 +26,7 @@
           </form>
               <p data-cy-forget-password>Mot de passe oublié ? </p>
               <hr>
-              <button mat-raised-button color="accent" data-cy-new-account>Créer un nouveau compte</button>
-              <li><a routerLink="/accueil" data-cy-test>Redirection</a></li>
+              <button mat-raised-button color="accent" data-cy-new-account (click)="onCreate()" data-cy-create-account>Créer un nouveau compte</button>
         </mat-card-content>
     </mat-card>
   </div>

@@ -1,0 +1,11 @@
+
+.mat-icon {
+    transform: scale(1.2);
+    color: var(--color_text-button);
+    cursor: pointer;
+}
+
+.icon:hover {
+    color: var(--secondary);
+    transition: all 0.2s
+}

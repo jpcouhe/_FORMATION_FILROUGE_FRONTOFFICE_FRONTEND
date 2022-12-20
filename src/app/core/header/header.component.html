@@ -1,1 +1,49 @@
-<p>header works!</p>
+<link rel="stylesheet" href="header.component.scss">
+<header>
+  <nav class="p-20">
+    <div class="d-flex flex-align-items-center flex-justify-content-between m-auto h100 maxW1440 responsive">
+      <div class="left-nav d-flex flex-align-items-center maxW1440">
+        <a aria-label="Retour page accueil" [routerLink]="'/accueil/'">
+            <img class="left-nav__logo" src="../../../assets/images/icons8-calendar-100.png" alt="logo" />
+        </a>
+        <div class="d-flex flex-align-items-center display-calendar">
+            <mat-icon class="icon ml-20">calendar_month</mat-icon>
+            <span class="ml-10 display-calendar__name">Mon Calendrier</span>
+          <button mat-button class="d-flex ">
+            <mat-icon class="icon ml-20" [matMenuTriggerFor]="menuCalendar">expand_more</mat-icon>
+          </button>
+          <mat-menu #menuCalendar="matMenu" yPosition="below" xPosition="before">
+            <button mat-menu-item>
+              <span>Un autre calendrier partagé</span>
+            </button>
+            <button mat-menu-item>
+              <span>Un second</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="right-nav d-flex flex-align-items-center">
+        <div class="right-nav__logo d-flex flex-align-items-center">
+            <a [routerLink]="['/accueil/users']" class=""><mat-icon class="icon mr-40 ">groups</mat-icon></a>
+          <div class="right-nav__container__avatar">
+            <img class="right-nav__avatar" src="/assets/images/lion.jpg" alt="">
+          </div>
+          <span class="ml-10 right-nav__name">Jean-philippe C.</span>
+          <button mat-button class="d-flex ">
+            <mat-icon class="icon" [matMenuTriggerFor]="menu">expand_more</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>person</mat-icon>
+              <span>Profil</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>logout</mat-icon>
+              <span>Se deconnecter</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

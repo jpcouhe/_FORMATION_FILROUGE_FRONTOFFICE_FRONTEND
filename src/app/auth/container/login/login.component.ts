@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
 import {Router} from "@angular/router";
 import {catchError, EMPTY, of} from "rxjs";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {SignupComponent} from "../signup/signup.component";
 
 @Component({
   selector: 'app-login',
@@ -16,27 +18,17 @@ export class LoginComponent implements OnInit {
   })
   error!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
 
 public submit() {
-  /*  if(this.form.valid){
-        this.authService.login(this.form.getRawValue()).subscribe((resultat) => {
-          if(!resultat){
-            this.form.controls['email'].setErrors({
-              login: true
-            })
-          }else{
-            this.router.navigateByUrl('/accueil/')
-          }
-        })
-    }*/
-
   if(this.form.valid){
-    this.authService.login(this.form.getRawValue()).pipe(
+    const email =  this.form.get("email")!.value;
+    const password =  this.form.get("password")!.value;
+    this.authService.login(email, password).pipe(
       catchError((error) => {
         this.error = error.message;
         return EMPTY
@@ -46,9 +38,14 @@ public submit() {
   }
   }
 
-/*  get hasLoginError(): boolean {
-    return this.form.controls['email'].hasError('login')
-  }*/
+  onCreate() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "80%";
+    this.dialog.open(SignupComponent, dialogConfig)
+  }
 }
 
 

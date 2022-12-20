@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren:() => import('./features/features.module').then((m) => m.FeaturesModule)
   },
   {
-    path:'',
+    path:'**',
     redirectTo:'auth/login',
     pathMatch:'full'
   }

@@ -16,15 +16,25 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  public login(credential: any): Observable<any> {
-    return this.http.post<any>("https://localhost:8080/api/auth/login", credential)
+  public login(email: string, password: string): Observable<any> {
+    return this.http.post<any>("https://localhost:8080/api/auth/login", email)
       .pipe(
         tap((user:any) => {
           this.userId = user.userId
           this.isLogged$.next(true);
           this.auth$.next(user)},
           ),
-       /* map(() => true ),*/
     )
-}
+  }
+
+  public signup(firstname: string, lastname: string, email: string, password: string){
+    return this.http.post<{message: string}>('https://localhost:8080/api/auth/signup', {
+      firstname,
+      lastname,
+      email,
+      password
+    })
+  }
+
+
 }

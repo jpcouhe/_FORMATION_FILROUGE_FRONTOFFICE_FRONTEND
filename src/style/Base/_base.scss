@@ -103,6 +103,8 @@ $my-theme: mat.define-light-theme(
     --background-ligh: #F5F5F5;
     --alert: #FF0000;
     --color_text-button: #FFFFFF;
+    --background-dark: #eaeaea;
+    --background-darkest: #5c7d99;
 }
 
 
@@ -175,6 +177,10 @@ $my-theme: mat.define-light-theme(
   padding: 30px;
 }
 
+.m-0{
+  margin: 0;
+}
+
 .m-10 {
   margin: 10px;
 }
@@ -187,6 +193,14 @@ $my-theme: mat.define-light-theme(
   margin: 0 auto;
 }
 
+.mr-20{
+  margin-right: 20px;
+}
+
+.mr-40{
+  margin-right: 40px;
+}
+
 .ml-auto {
   margin-left: auto;
 }
@@ -197,6 +211,10 @@ $my-theme: mat.define-light-theme(
   margin-left: 5px;
 }
 .ml-10 {
+  margin-left: 10px;
+}
+
+.ml-20 {
   margin-left: 10px;
 }
 .mb-10 {

@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="getStarted__logo">
+    <img src="../../../../assets/images/icons8-calendar-100.png" alt="logo">
+  </div>
+  <div class="getStarted__logo__information">
+    <h1 class="getStarted__logo__information__title">Bienvenue ! Créons votre profil</h1>
+    <div>
+      <h2 class="mb-50">Ajoutez une photo de profil</h2>
+      <div class="getStarted__logo__information__picture mb-50 d-flex flex-justify-content-center">
+        <div class="block-left d-flex flex-align-items-center flex-justify-content-center">
+          <mat-icon *ngIf="!url" class="camera">photo_camera</mat-icon>
+
+          <img class="preview w100 h100" *ngIf="url" [src]="url" />
+        </div>
+        <div class="block-right">
+          <div class="block-right__label">
+            <label for="file" class="label-file p-15 fw-700">Choisir une image</label>
+            <input type="file" class="input-file" id="file" (change)="onselectFile($event)" />
+          </div>
+          <p class="block-right__defaultImage" (click)="setPopup()">> Prenez notre image par defaut</p>
+          <div class="block-right__popup d-flex" *ngIf="popup === true">
+            <img
+              (click)="setFiles($event)"
+              class="block-right__popup__image"
+              src="/assets/images/lion.jpg"
+              alt="lion"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="mb-50">Ajoutez votre ville</h2>
+      <div class="mb-50 d-flex flex-justify-content-center">
+        <form [formGroup]="cityForm">
+            <mat-form-field floatLabel="never" appearance="fill">
+              <mat-label>City</mat-label>
+              <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city">
+            </mat-form-field>
+          <button mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()">Suivant</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

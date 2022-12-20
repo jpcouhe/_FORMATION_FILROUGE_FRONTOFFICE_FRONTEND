@@ -6,6 +6,7 @@ import { ContainerComponent } from './container/container.component';
 import {AuthRoutingModule} from "./auth-routing.module";
 import {SharedModule} from "../shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { GetStartedComponent } from './container/get-started/get-started.component';
 
 
 
@@ -13,7 +14,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   declarations: [
     LoginComponent,
     SignupComponent,
-    ContainerComponent
+    ContainerComponent,
+    GetStartedComponent
   ],
   imports: [
     CommonModule,
