@@ -13,4 +13,7 @@ export class ProfilDeleteComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  deleteUser() {
+      //todo delete user route
+  }
 }
