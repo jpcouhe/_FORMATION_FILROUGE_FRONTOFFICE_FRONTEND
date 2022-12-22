@@ -14,6 +14,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { FormEventComponent } from './calendar/form-event/form-event.component';
 import { MeteoComponent } from './meteo/meteo.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { EditEventComponent } from './calendar/edit-event/edit-event.component';
 
 
 
@@ -26,7 +27,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     ProfilDeleteComponent,
     CalendarComponent,
     FormEventComponent,
-    MeteoComponent
+    MeteoComponent,
+    EditEventComponent
   ],
     imports: [
         CommonModule,

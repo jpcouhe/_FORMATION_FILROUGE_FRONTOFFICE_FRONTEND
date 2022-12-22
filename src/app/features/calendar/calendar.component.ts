@@ -10,6 +10,8 @@ import {createEventId, INITIAL_EVENTS} from "../../shared/Utils/event-utils";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {FormEventComponent} from "./form-event/form-event.component";
 import {BehaviorSubject, Observable, of} from "rxjs";
+import {EditEventComponent} from "./edit-event/edit-event.component";
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 
 @Component({
@@ -50,8 +52,8 @@ export class CalendarComponent implements OnInit{
   currentEvents: EventApi[] = [];
 
   event$:BehaviorSubject<any> = new BehaviorSubject<any>(
-    [{"title":"event 1","start": new Date()},
-    {"title":"event 2","start": new Date()}
+    [{"id": 10, "title":"event 1","start": new Date()},
+    {"id": 20, "title":"event 2","start": new Date()}
 
 
   ])
@@ -61,14 +63,36 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    //todo appel réseau pour récupérer les events
   }
 
 
   handleEventClick(clickInfo: EventClickArg) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "80%";
+    dialogConfig.data = clickInfo;
+    const ref = this.dialog.open(EditEventComponent, dialogConfig)
 
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    ref.afterClosed().subscribe(
+      data => {
+        console.log(data)
+        const eventList = this.event$.getValue();
+        const newEventList = []
+
+        for(let i = 0; i<eventList.length; i++){
+
+          if(eventList[i].id != data){
+            //todo appel réseau pour delete
+            newEventList.push(eventList[i])
+          }
+        }
+        this.event$.next(newEventList)
+      }
+    )
+
   }
 
   handleEvents(events: EventApi[]) {
@@ -86,8 +110,6 @@ export class CalendarComponent implements OnInit{
     const ref = this.dialog.open(FormEventComponent, dialogConfig)
     ref.afterClosed().subscribe((data:any) => {
       if(data) {
-
-        console.log(data)
         const newEvent = {
           id: createEventId(),
           title: data.title,
@@ -96,7 +118,7 @@ export class CalendarComponent implements OnInit{
         }
 
         const eventList = this.event$.getValue();
-
+        //todo appel réseau pour add un event
         const newList = [...eventList, newEvent]
 
         this.event$.next(newList)
