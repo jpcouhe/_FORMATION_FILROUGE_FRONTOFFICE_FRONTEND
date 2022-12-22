@@ -1,0 +1,11 @@
+<mat-tab-group>
+    <mat-tab label="Profil">
+      <app-profil-update [user]="user"></app-profil-update>
+    </mat-tab>
+    <mat-tab label="Securité">
+      <app-profil-password [user]="user"></app-profil-password>
+    </mat-tab>
+    <mat-tab label="Compte">
+      <app-profil-delete [user]="user"></app-profil-delete>
+    </mat-tab>
+</mat-tab-group>

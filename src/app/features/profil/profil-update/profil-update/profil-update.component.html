@@ -1,0 +1,52 @@
+
+<div class="profile-tab__header mt-30 d-flex flex-justify-content-center flex-align-items-center">
+  <div class="profile-tab__header__avatar">
+    <img class="profile-tab__header__avatar__image" *ngIf="url" [src]="url" />
+  </div>
+  <div>
+    <label for="file" class="label-file p-15">Choisir une image</label>
+    <input type="file" class="d-none" id="file" (change)="onselectFile($event)" />
+  </div>
+</div>
+<h2 class="profile-tab__title mt-20 mb-20">Informations personnelles</h2>
+
+<form [formGroup]="profilForm" >
+  <mat-form-field class="d-flex flex-column">
+    <mat-label for="firstname">Prénom</mat-label>
+    <input
+      matInput
+      type="text"
+      class="form-control"
+      id="firstname"
+      placeholder="Prénom"
+      formControlName="firstname"
+      name="firstname"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="d-flex flex-column secondInput">
+    <mat-label for="lastname">Nom</mat-label>
+    <input
+      matInput
+      type="text"
+      class="form-control"
+      id="lastname"
+      placeholder="Nom"
+      formControlName="lastname"
+      name="lastname"
+    />
+  </mat-form-field>
+  <mat-form-field class="d-flex flex-column secondInput">
+    <mat-label for="city">Ville</mat-label>
+    <input
+      matInput
+      type="text"
+      class="form-control"
+      id="city"
+      placeholder="Ville"
+      formControlName="city"
+      name="city"
+    />
+  </mat-form-field>
+  <button class="btn" (click)="saveProfil()">Enregistrer</button>
+</form>

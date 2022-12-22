@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {catchError, EMPTY, of} from "rxjs";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../signup/signup.component";
+import {FormEventComponent} from "../../../features/calendar/form-event/form-event.component";
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ public submit() {
     dialogConfig.autoFocus = false;
     dialogConfig.width = "600px";
     dialogConfig.maxWidth = "80%";
-    this.dialog.open(SignupComponent, dialogConfig)
+    this.dialog.open(FormEventComponent, dialogConfig)
   }
 }
 
