@@ -1,0 +1,38 @@
+.container-meteo-calendar{
+/*  min-height: 100%;*/
+  /*height: calc(100vh - 120px);*/
+}
+
+.container-calendar{
+  margin-top: 60px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.container-header{
+  display: flex;
+  max-width: 300px;
+  flex-direction: column;
+
+  margin: 20px 40px;
+
+  h1 {
+   justify-self: flex-start;
+  }
+}
+
+
+.calendar{
+  margin: 0 40px;
+  height: 800px;
+  width: 100%;
+}
+
+.calendar-header{
+  margin-top:20px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

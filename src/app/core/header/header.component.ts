@@ -23,4 +23,8 @@ export class HeaderComponent implements OnInit {
     dialogConfig.maxWidth = "80%";
     this.dialog.open(ProfilComponent, dialogConfig)
   }
+
+  logout() {
+    //todo faire le logout
+  }
 }

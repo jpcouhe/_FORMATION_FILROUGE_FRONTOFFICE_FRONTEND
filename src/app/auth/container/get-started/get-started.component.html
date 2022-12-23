@@ -41,5 +41,21 @@
         </form>
       </div>
     </div>
+    <div>
+      <h2 class="mb-50">Description du calendrier</h2>
+      <div class="mb-50 d-flex flex-justify-content-center">
+        <form [formGroup]="calendarForm">
+          <mat-form-field floatLabel="never" appearance="fill">
+            <mat-label>City</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()">Suivant</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

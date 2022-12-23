@@ -107,7 +107,9 @@ $my-theme: mat.define-light-theme(
     --background-darkest: #5c7d99;
 }
 
-
+html{
+  height: 100%;
+}
 
 //utils
 

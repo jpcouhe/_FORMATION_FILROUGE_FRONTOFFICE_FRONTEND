@@ -18,10 +18,13 @@ export class GetStartedComponent implements OnInit {
   popup: boolean = false;
   selectedFile: HTMLInputElement | undefined;
   cityForm!: FormGroup;
+  calendarForm!: FormGroup;
 
   constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+      //todo requete pour creer un calendrier avec description
+
       this.authService.auth$.pipe(
         tap((user) => {
           this.user = user;
@@ -60,13 +63,15 @@ export class GetStartedComponent implements OnInit {
       if(this.cityForm.valid){
         this.userService.updateUser(this.user.id, imgProfil, this.user.firstname, this.user.name, this.cityForm.getRawValue()).pipe(
           tap(()=>{
-              this.router.navigate(['/accueil'])
+              this.router.navigate(['/accueil/calendar'])
           }),
           catchError((err) =>{
             return EMPTY
           })
         ).subscribe()
       }
+
+      //todo requete pour creer un calendrier avec description
 
 
 

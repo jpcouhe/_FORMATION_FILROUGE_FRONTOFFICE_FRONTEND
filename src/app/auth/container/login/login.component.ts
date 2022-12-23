@@ -45,7 +45,7 @@ public submit() {
     dialogConfig.autoFocus = false;
     dialogConfig.width = "600px";
     dialogConfig.maxWidth = "80%";
-    this.dialog.open(FormEventComponent, dialogConfig)
+    this.dialog.open(SignupComponent, dialogConfig)
   }
 }
 

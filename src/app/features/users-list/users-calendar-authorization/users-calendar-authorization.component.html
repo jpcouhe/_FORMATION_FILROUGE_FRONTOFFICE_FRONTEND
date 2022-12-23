@@ -1,0 +1,9 @@
+<script src="../../../auth/container/signup/signup.component.ts"></script><h3>Authorization</h3>
+<p>Jean-philippe Couhe</p>
+<form [formGroup]="authorizationForm">
+  <p><mat-checkbox formControlName="read">Lecture</mat-checkbox></p>
+  <p><mat-checkbox formControlName="write">Écriture</mat-checkbox></p>
+  <p><mat-checkbox formControlName="modification">Modification</mat-checkbox></p>
+  <button mat-raised-button color="warn" (click)="onSubmit()">Valider</button>
+</form>
+

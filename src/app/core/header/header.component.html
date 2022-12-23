@@ -3,7 +3,7 @@
   <nav class="p-20">
     <div class="d-flex flex-align-items-center flex-justify-content-between m-auto h100 maxW1440 responsive">
       <div class="left-nav d-flex flex-align-items-center maxW1440">
-        <a aria-label="Retour page accueil" [routerLink]="'/accueil/'">
+        <a aria-label="Retour page accueil" [routerLink]="'/accueil/calendar'">
             <img class="left-nav__logo" src="../../../assets/images/icons8-calendar-100.png" alt="logo" />
         </a>
         <div class="d-flex flex-align-items-center display-calendar">
@@ -37,7 +37,7 @@
               <mat-icon>person</mat-icon>
               <span>Profil</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="logout()">
               <mat-icon>logout</mat-icon>
               <span>Se deconnecter</span>
             </button>

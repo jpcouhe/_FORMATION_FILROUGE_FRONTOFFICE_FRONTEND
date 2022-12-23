@@ -12,6 +12,7 @@ import {FormEventComponent} from "./form-event/form-event.component";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {EditEventComponent} from "./edit-event/edit-event.component";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -31,14 +32,18 @@ export class CalendarComponent implements OnInit{
       listPlugin,],
     initialView: 'dayGridMonth',
     headerToolbar: {
-      left: 'title',
-      center: '',
-      right: 'addEventButton dayGridMonth,timeGridWeek,timeGridDay prev,next today'
+      left: 'addEventButton2',
+      center: 'addEventButton dayGridMonth,timeGridWeek,timeGridDay prev,next today',
+      right: 'title'
     },
     customButtons:{
       addEventButton: {
-        text: "add event",
-        click: () => this.openModal()
+        text: "Ajouter un événement",
+        click: () => this.openModal(),
+      },
+      addEventButton2: {
+        text: "Liste des partages",
+        click: () => this.redirect(),
       }
     },
     events:this.events1,
@@ -59,11 +64,12 @@ export class CalendarComponent implements OnInit{
   ])
 
 
-  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog) {
+  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private route: Router) {
   }
 
   ngOnInit(): void {
     //todo appel réseau pour récupérer les events
+    //todo faire appel réseau avec id d'un calendrier
   }
 
 
@@ -96,6 +102,8 @@ export class CalendarComponent implements OnInit{
   }
 
   handleEvents(events: EventApi[]) {
+    console.log("salut")
+    //todo appel réseau pour edite l'event
     this.currentEvents = events;
     this.changeDetector.detectChanges();
   }
@@ -116,9 +124,10 @@ export class CalendarComponent implements OnInit{
           start: data.start,
           end: data.end
         }
-
+        // todo événement sur 1 journée? end?
         const eventList = this.event$.getValue();
         //todo appel réseau pour add un event
+        //todo appel réseau pour add un event en fonction d'un id
         const newList = [...eventList, newEvent]
 
         this.event$.next(newList)
@@ -130,4 +139,7 @@ export class CalendarComponent implements OnInit{
 
   }
 
+  private redirect() {
+      this.route.navigateByUrl("accueil/calendar/authorization")
+  }
 }

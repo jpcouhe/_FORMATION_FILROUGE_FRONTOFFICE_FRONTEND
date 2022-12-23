@@ -1,0 +1,31 @@
+<h1>Application <span>météo</span></h1>
+<div class="city-search-header">
+  <div class="search-city-input-wrapper">
+    <input class="search-city-input" auto-complete-placeholder="search city" placeholder="search city"
+           auto-complete [(ngModel)]="selectedCity"
+          (keyup.enter)="selectCity(input.value)"
+           #input/>
+    <button class="search-city-btn" (click)="selectCity(input.value)"></button>
+  </div>
+</div>
+<div class="container-meteo">
+  <div class="weather-information" *ngIf="displaymeteo">
+    <img src="/assets/images/meteoIcon/{{icon}}.svg" alt="logo météo" class="weather-image">
+    <div class="bloc-info">
+      <p class="temperature">{{temp}}°</p>
+      <p class="position">{{city}}</p>
+    </div>
+  </div>
+
+  <div class="bottom-content">
+    <div class="forecast-content">
+      <div class="forecast hour-forecast active">
+          <div *ngFor="let forcastThreeHours of forcast; let index = index" class="forecast-block">
+            <p class="hour-name">{{forcastThreeHours.dt}}h</p>
+            <p class="hour-temp">{{forcastThreeHours.temp}}°</p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+

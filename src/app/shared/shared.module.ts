@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MaterialModule} from "./layouts/material.module";
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    FilterPipe
+  ],
   imports: [
     CommonModule,
     MaterialModule

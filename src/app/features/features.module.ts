@@ -8,13 +8,16 @@ import { ProfilComponent } from './profil/profil.component';
 import { ProfilUpdateComponent } from './profil/profil-update/profil-update/profil-update.component';
 import { ProfilPasswordComponent } from './profil/profil-update/profil-password/profil-password.component';
 import { ProfilDeleteComponent } from './profil/profil-update/profil-delete/profil-delete.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import { CalendarComponent } from './calendar/calendar.component';
 import { FormEventComponent } from './calendar/form-event/form-event.component';
 import { MeteoComponent } from './meteo/meteo.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { EditEventComponent } from './calendar/edit-event/edit-event.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UsersCalendarAuthorizationComponent } from './users-list/users-calendar-authorization/users-calendar-authorization.component';
+import { ManageAuthorizationComponent } from './manage-authorization/manage-authorization.component';
 
 
 
@@ -28,16 +31,20 @@ import { EditEventComponent } from './calendar/edit-event/edit-event.component';
     CalendarComponent,
     FormEventComponent,
     MeteoComponent,
-    EditEventComponent
+    EditEventComponent,
+    UsersListComponent,
+    UsersCalendarAuthorizationComponent,
+    ManageAuthorizationComponent
   ],
-    imports: [
-        CommonModule,
-        FeaturesRoutingModules,
-        SharedModule,
-        CoreModule,
-        ReactiveFormsModule,
-        FullCalendarModule,
-        MatDatepickerModule
-    ]
+  imports: [
+    CommonModule,
+    FeaturesRoutingModules,
+    SharedModule,
+    CoreModule,
+    ReactiveFormsModule,
+    FullCalendarModule,
+    MatDatepickerModule,
+    FormsModule
+  ]
 })
 export class FeaturesModule { }
