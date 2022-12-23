@@ -8,7 +8,7 @@
   <div>
     <mat-card>
         <mat-card-content>
-          <form (submit)="submit()" [formGroup]="form">
+          <form [formGroup]="form">
               <mat-form-field floatLabel="never" appearance="fill">
                 <mat-label>Email</mat-label>
                 <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" data-cy-email name="email">
@@ -22,7 +22,7 @@
                   <mat-error data-cy-password-error *ngIf="form.get('password')?.errors?.['required']">Veuillez renseigner un mot de passe</mat-error>
                 </mat-form-field>
                 <mat-error *ngIf="error" data-cy-global-status>Utilisateur introuvable</mat-error>
-                <button mat-raised-button color="primary" data-cy-submit>Se connecter</button>
+                <button mat-raised-button color="primary" data-cy-submit (click)="submit()">Se connecter</button>
           </form>
               <p data-cy-forget-password>Mot de passe oublié ? </p>
               <hr>

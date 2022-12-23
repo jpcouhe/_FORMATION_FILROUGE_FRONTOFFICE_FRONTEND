@@ -34,7 +34,8 @@ public submit() {
         this.error = error.message;
         return EMPTY
       })).subscribe((resultat) => {
-        this.router.navigateByUrl('/accueil/')
+          console.log("ok");
+         this.router.navigateByUrl('/accueil/')
     })
   }
   }
