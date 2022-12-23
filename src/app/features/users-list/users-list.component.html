@@ -3,6 +3,7 @@
   <div class="search-user__field">
     <label for="search-user"></label>
     <input
+      class="search-user-input"
       placeholder="Qui recherchez vous? "
       type="text"
       id="search-user"
@@ -12,21 +13,19 @@
 </section>
 
 <section>
-<!--  <div class="user-card p-10 d-flex" *ngFor="let user of users | filter: filteredString">
-    <img class="user-card__image" [src]="user.imgUser" alt="Photo de profil de {{ user.lastname }}" />
-    <div class="user-card__header d-flex flex-column flex-justify-content-center fs-16">
-      <div class="user-card__header__text d-flex mb-20">
-        <p>{{ user.firstname | titlecase }} {{ user.lastname | titlecase }}</p>
-      </div>
-      <a href="mailto:{{ user.email }}">{{ user.email }} </a>
-    </div>
-  </div>-->
-  <div (click)="displayModal()" class="user-card p-10 d-flex">
-    <img class="user-card__image" [src]="" alt="#" />
+  <mat-card (click)="displayModal()" class="user-card p-10 d-flex">
+    <mat-card-header class="d-flex">
+      <img mat-card-avatar src="/assets/images/lion.jpg">
+      <mat-card-title class="user-card__header__text">{{ "Jean-philippe" | titlecase }} {{ "Couhe" | titlecase }}</mat-card-title>
+      <mat-card-subtitle class="user-card__header__subtitle">jeanphilippe.couhe@hotmail.fr</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+ <!-- <div >
+    &lt;!&ndash;<img class="user-card__image" [src]="" alt="#" />&ndash;&gt;
     <div class="user-card__header d-flex flex-column flex-justify-content-center fs-16">
       <div class="user-card__header__text d-flex mb-20">
         <p>{{ "Jean-philippe" | titlecase }} {{ "Couhe" | titlecase }}</p>
       </div>
     </div>
-  </div>
+  </div>-->
 </section>

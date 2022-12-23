@@ -1,32 +1,29 @@
-<div>
-  <div>
-    <div>
+<div class="container">
+  <div class="landing d-flex flex-column flex-align-items-center flex-justify-content-center">
+    <div class="logo d-flex ">
       <img src="assets/images/icons8-calendar-100.png" alt="">
     </div>
     <h1>Plan your Dreams</h1>
-  </div>
-  <div>
-    <mat-card>
-        <mat-card-content>
-          <form (submit)="submit()" [formGroup]="form">
-              <mat-form-field floatLabel="never" appearance="fill">
+    <mat-card class="card__login">
+        <mat-card-content class="card__login__content">
+          <form (ngSubmit)="submit()" [formGroup]="form">
+              <mat-form-field floatLabel="never" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" data-cy-email name="email">
                 <mat-error data-cy-email-error *ngIf="form.get('email')?.errors?.['required'] || form.get('email')?.errors?.['email']">
                   Addresse email incorrecte
                 </mat-error>
               </mat-form-field>
-                <mat-form-field floatLabel="never" appearance="fill">
+                <mat-form-field floatLabel="never" appearance="outline">
                   <mat-label>Mot de passe</mat-label>
                   <input type="password" matInput formControlName="password" data-cy-password name="password">
                   <mat-error data-cy-password-error *ngIf="form.get('password')?.errors?.['required']">Veuillez renseigner un mot de passe</mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="error" data-cy-global-status>Utilisateur introuvable</mat-error>
-                <button mat-raised-button color="primary" data-cy-submit>Se connecter</button>
+                <button mat-raised-button color="primary" data-cy-submit class="btn-login">Se connecter</button>
           </form>
-              <p data-cy-forget-password>Mot de passe oublié ? </p>
-              <hr>
-              <button mat-raised-button color="accent" data-cy-new-account (click)="onCreate()" data-cy-create-account>Créer un nouveau compte</button>
+              <p class="forgot-password" data-cy-forget-password>Mot de passe oublié ? </p>
+              <hr class="separator">
+              <button mat-raised-button color="accent" data-cy-new-account (click)="onCreate()" data-cy-create-account class="btn-create">Créer un nouveau compte</button>
         </mat-card-content>
     </mat-card>
   </div>

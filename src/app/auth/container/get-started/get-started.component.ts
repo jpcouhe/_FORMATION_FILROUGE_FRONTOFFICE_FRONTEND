@@ -17,7 +17,7 @@ export class GetStartedComponent implements OnInit {
   url!: string;
   popup: boolean = false;
   selectedFile: HTMLInputElement | undefined;
-  cityForm!: FormGroup;
+  updateForm!: FormGroup;
   calendarForm!: FormGroup;
 
   constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router) { }
@@ -31,8 +31,9 @@ export class GetStartedComponent implements OnInit {
         })
       )
 
-      this.cityForm = this.formBuilder.group({
-        city:['', Validators.required]
+      this.updateForm = this.formBuilder.group({
+        city:['', Validators.required],
+        description:['', Validators.required]
       })
   }
 
@@ -60,8 +61,8 @@ export class GetStartedComponent implements OnInit {
       this.selectedFile ? (imgProfil = this.selectedFile) : (imgProfil = this.url)
 
 
-      if(this.cityForm.valid){
-        this.userService.updateUser(this.user.id, imgProfil, this.user.firstname, this.user.name, this.cityForm.getRawValue()).pipe(
+      if(this.updateForm.valid){
+        this.userService.updateUser(this.user.id, imgProfil, this.user.firstname, this.user.name, this.updateForm.getRawValue()).pipe(
           tap(()=>{
               this.router.navigate(['/accueil/calendar'])
           }),

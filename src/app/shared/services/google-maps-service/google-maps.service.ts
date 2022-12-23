@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
-
   public placeSubject: Subject<google.maps.places.PlaceResult> = new Subject<google.maps.places.PlaceResult>();
   public placeObservable = this.placeSubject.asObservable();
   constructor() { }
+
   getPlaceAutocomplete(addressText: any): any {
     const autocomplete = new google.maps.places.Autocomplete(
       addressText.nativeElement,{ componentRestrictions: { country:
-            ['FR', 'DE'] }, types:     ['establishment', 'geocode'] });
+            ['FR', 'DE', 'GB'] }, types:     ['(cities)'] });
     google.maps.event.addListener(autocomplete,'place_changed',() => {
       const place = autocomplete.getPlace();
       this.placeSubject.next(place);

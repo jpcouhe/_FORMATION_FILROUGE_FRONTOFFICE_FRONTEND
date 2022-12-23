@@ -6,6 +6,7 @@ import {catchError, EMPTY, of} from "rxjs";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../signup/signup.component";
 import {FormEventComponent} from "../../../features/calendar/form-event/form-event.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   })
   error!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -31,7 +32,13 @@ public submit() {
     const password =  this.form.get("password")!.value;
     this.authService.login(email, password).pipe(
       catchError((error) => {
+
         this.error = error.message;
+        this.snackBar.open("Invalid Login Credentials", 'Try again!', {
+          duration:5000,
+          verticalPosition:'top',
+          panelClass: ['red-snackbar','login-snackbar'],
+        })
         return EMPTY
       })).subscribe((resultat) => {
         this.router.navigateByUrl('/accueil/')

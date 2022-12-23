@@ -100,6 +100,7 @@ $my-theme: mat.define-light-theme(
 :root {
     --primary: #2C3E50;
     --secondary: #E2C044;
+    --tertiary: #c0c5cb;
     --background-ligh: #F5F5F5;
     --alert: #FF0000;
     --color_text-button: #FFFFFF;
@@ -111,13 +112,14 @@ html{
   height: 100%;
 }
 
+
 //utils
 
 .container {
   position: relative;
   width: 100%;
-  max-width: 1440px;
-  margin: auto;
+/*  max-width: 1440px;
+  margin: auto;*/
   height: 100vh;
   background-color: transparent;
 }

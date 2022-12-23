@@ -8,6 +8,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const MODULES = [
   CommonModule,
@@ -18,7 +19,8 @@ const MODULES = [
   MatDialogModule,
   MatIconModule,
   MatCardModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule
 ]
 
 @NgModule({

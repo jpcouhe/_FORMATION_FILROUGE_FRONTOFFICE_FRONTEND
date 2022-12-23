@@ -1,0 +1,36 @@
+.cross{
+  color: var(--primary);
+}
+
+.modal-header{
+  display: flex;
+  justify-content: space-between;
+
+  &__title{
+    font-size: 1.6rem;
+  }
+
+}
+
+
+form{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .full-width{
+    width: 100%;
+  }
+}
+
+.straight-line-input{
+  display: flex;
+  gap: 10px;
+}
+
+
+.btn-register{
+  margin: 0 auto;
+  height: 50px;
+  width: 50%;
+}

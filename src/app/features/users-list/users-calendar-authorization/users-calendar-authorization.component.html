@@ -1,9 +1,9 @@
-<script src="../../../auth/container/signup/signup.component.ts"></script><h3>Authorization</h3>
-<p>Jean-philippe Couhe</p>
+<h2>Vous souhaitez partager votre calendrier à Jean-philippe? </h2>
+<p>Veuillez définir les autorisations </p>
 <form [formGroup]="authorizationForm">
   <p><mat-checkbox formControlName="read">Lecture</mat-checkbox></p>
   <p><mat-checkbox formControlName="write">Écriture</mat-checkbox></p>
   <p><mat-checkbox formControlName="modification">Modification</mat-checkbox></p>
-  <button mat-raised-button color="warn" (click)="onSubmit()">Valider</button>
+  <button mat-raised-button color="warn" (click)="onSubmit()" class="btn-authorize">Valider</button>
 </form>
 

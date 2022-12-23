@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 @Component({
   selector: 'app-profil-update',
   templateUrl: './profil-update.component.html',
-  styleUrls: ['./profil-update.component.scss']
+  styleUrls: ['./profil-update.component.scss'],
 })
 export class ProfilUpdateComponent implements OnInit {
 

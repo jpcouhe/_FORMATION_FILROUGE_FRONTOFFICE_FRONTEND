@@ -22,7 +22,8 @@
   width: 600px;
   background-color: var(--background-white);
   border-radius: 10px;
-  border: 1px solid black;
+  cursor: pointer;
+/*  border: 1px solid black;*/
 
 
   &__image {
@@ -36,4 +37,21 @@
     margin-left: 20px;
     font-size: 15px;
   }
+}
+
+
+.user-card__header__subtitle{
+  margin-bottom: 0;
+}
+.search-user-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 3rem;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 2rem 0.15rem rgba(44, 62, 80, 0.1);
+  font-size: 1rem;
+  color: #131F69;
+  text-transform: uppercase;
 }
