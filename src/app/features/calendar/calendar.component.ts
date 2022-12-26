@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit{
     dayMaxEvents: true,
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+    eventColor: '#2C3E50'
   };
   currentEvents: EventApi[] = [];
 

@@ -4,18 +4,20 @@
 }
 
 .container-calendar{
-  margin-top: 60px;
+ /* margin-top: 60px;*/
   margin-bottom: 60px;
   display: flex;
   align-items: center;
-}
 
+}
+.container-meteo-calendar__header{
+    margin: 10px 20px 0;
+}
 .container-header{
   display: flex;
   max-width: 300px;
   flex-direction: column;
-
-  margin: 20px 40px;
+  margin: 20px 0 20px 40px;
 
   h1 {
    justify-self: flex-start;

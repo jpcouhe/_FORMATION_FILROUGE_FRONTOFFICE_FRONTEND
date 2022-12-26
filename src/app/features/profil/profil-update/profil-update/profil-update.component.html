@@ -1,5 +1,6 @@
 
-<div class="profile-tab__header mt-30 d-flex flex-justify-content-center flex-align-items-center">
+
+<div class="profile-tab__header mt-30 mb-20 d-flex flex-justify-content-center flex-align-items-center">
   <div class="profile-tab__header__avatar">
     <img class="profile-tab__header__avatar__image" *ngIf="url" [src]="url" />
   </div>
@@ -11,8 +12,8 @@
 <h2 class="profile-tab__title mt-20 mb-20">Informations personnelles</h2>
 
 <form [formGroup]="profilForm" >
-  <mat-form-field class="d-flex flex-column">
-    <mat-label for="firstname">Prénom</mat-label>
+  <mat-form-field class="d-flex flex-column" appearance="outline">
+    <mat-label  for="firstname" class="input-ws100">Prénom</mat-label>
     <input
       matInput
       type="text"
@@ -24,8 +25,8 @@
     />
   </mat-form-field>
 
-  <mat-form-field class="d-flex flex-column secondInput">
-    <mat-label for="lastname">Nom</mat-label>
+  <mat-form-field class="d-flex flex-column secondInput" appearance="outline">
+    <mat-label  for="lastname">Nom</mat-label>
     <input
       matInput
       type="text"
@@ -36,8 +37,8 @@
       name="lastname"
     />
   </mat-form-field>
-  <mat-form-field class="d-flex flex-column secondInput">
-    <mat-label for="city">Ville</mat-label>
+  <mat-form-field class="d-flex flex-column secondInput" appearance="outline">
+    <mat-label   for="city">Ville</mat-label>
     <input
       matInput
       type="text"
@@ -48,5 +49,5 @@
       name="city"
     />
   </mat-form-field>
-  <button class="btn" (click)="saveProfil()">Enregistrer</button>
+  <button mat-raised-button color="accent" class="btn-update" (click)="saveProfil()">Enregistrer</button>
 </form>

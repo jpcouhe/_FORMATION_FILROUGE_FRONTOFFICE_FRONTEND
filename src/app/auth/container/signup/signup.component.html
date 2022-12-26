@@ -1,36 +1,43 @@
 <mat-card-content>
-  <mat-card-header>
-    <mat-card-title>Inscription</mat-card-title>
+  <div class="modal-header">
+    <h2 class="modal-header__title">Inscription</h2>
     <mat-icon aria-label="Fermer la fenetre" (click)="closeTab()" class="cross">cancel</mat-icon>
-  </mat-card-header>
+  </div>
+  <p class="modal-header__info fs-24 fw-300">C'est rapide et facile</p>
   <form [formGroup]="signupForm">
-    <mat-form-field floatLabel="never" appearance="fill">
-      <mat-label>Prénom</mat-label>
-      <input type="text" matInput placeholder="Prénom" data-cy-firstname name="firstname" formControlName="firstname">
-      <mat-error *ngIf="firstnameHasErrorMessage" data-cy-formatFirstname-error>{{firstnameHasErrorMessage}}</mat-error>
-    </mat-form-field>
-    <mat-form-field floatLabel="never" appearance="fill">
-      <mat-label>Nom</mat-label>
-      <input type="text" matInput placeholder="Nom" data-cy-name name="name" formControlName="name">
-      <mat-error *ngIf="NameHasErrorMessage" data-cy-formatName-error>{{NameHasErrorMessage}}</mat-error>
 
-    </mat-form-field>
-    <mat-form-field floatLabel="never" appearance="fill">
-      <mat-label>Email</mat-label>
-      <input type="text" matInput placeholder="Ex. pat@example.com" data-cy-email-signup name="emailSignup" formControlName="emailSignup">
-      <mat-error *ngIf="emailHasErrorMessage" data-cy-email-error>{{emailHasErrorMessage}}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Mot de passe</mat-label>
-      <input type="password" matInput placeholder="Mot de passe" data-cy-password-signup name="passwordSignup" formControlName="passwordSignup">
-      <mat-error *ngIf="passWordHasErrorMessage" data-cy-password-error>{{passWordHasErrorMessage}}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label >Confirmer Mot de passe</mat-label>
-      <input type="password" matInput placeholder="Confirmer mot de passe" data-cy-match-password-signup name="matchPasswordSignup" formControlName="matchPasswordSignup">
+      <div class="straight-line-input">
+          <mat-form-field floatLabel="never" appearance="outline" class="full-width">
+            <mat-label>Prénom</mat-label>
+            <input type="text" matInput placeholder="Prénom" data-cy-firstname name="firstname" formControlName="firstname">
+            <mat-error *ngIf="firstnameHasErrorMessage" data-cy-formatFirstname-error>{{firstnameHasErrorMessage}}</mat-error>
+          </mat-form-field>
 
-    </mat-form-field>
+        <mat-form-field floatLabel="never" appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+          <input type="text" matInput placeholder="Nom" data-cy-name name="name" formControlName="name">
+          <mat-error *ngIf="NameHasErrorMessage" data-cy-formatName-error>{{NameHasErrorMessage}}</mat-error>
+        </mat-form-field>
+      </div>
+    <div class="straight-line-input">
+      <mat-form-field floatLabel="never" appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput placeholder="Ex. pat@example.com" data-cy-email-signup name="emailSignup" formControlName="emailSignup">
+        <mat-error *ngIf="emailHasErrorMessage" data-cy-email-error>{{emailHasErrorMessage}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="straight-line-input">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input type="password" matInput placeholder="Mot de passe" data-cy-password-signup name="passwordSignup" formControlName="passwordSignup">
+        <mat-error *ngIf="passWordHasErrorMessage" data-cy-password-error>{{passWordHasErrorMessage}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label >Confirmer Mot de passe</mat-label>
+        <input type="password" matInput placeholder="Confirmer mot de passe" data-cy-match-password-signup name="matchPasswordSignup" formControlName="matchPasswordSignup">
+      </mat-form-field>
+    </div>
     <mat-error *ngIf="matchPasswordHasErrorMessage" data-cy-passwordMatch-error>{{matchPasswordHasErrorMessage}}</mat-error>
-    <button [disabled]="signupForm.invalid || signupForm.untouched" mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()">S'inscrire</button>
+    <button [disabled]="signupForm.invalid || signupForm.untouched" mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()" class="btn-register">S'inscrire</button>
   </form>
 </mat-card-content>

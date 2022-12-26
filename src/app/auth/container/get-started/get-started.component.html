@@ -1,12 +1,12 @@
 <div class="container">
-  <div class="getStarted__logo">
-    <img src="../../../../assets/images/icons8-calendar-100.png" alt="logo">
-  </div>
   <div class="getStarted__logo__information">
-    <h1 class="getStarted__logo__information__title">Bienvenue ! Créons votre profil</h1>
+    <div class="getStarted__logo__information__header">
+      <img src="../../../../assets/images/icons8-calendar-100.png" alt="logo">
+      <h2 class="getStarted__logo__information__title">Bienvenue ! Créons votre profil</h2>
+    </div>
     <div>
       <h2 class="mb-50">Ajoutez une photo de profil</h2>
-      <div class="getStarted__logo__information__picture mb-50 d-flex flex-justify-content-center">
+      <div class="getStarted__logo__information__picture mb-50">
         <div class="block-left d-flex flex-align-items-center flex-justify-content-center">
           <mat-icon *ngIf="!url" class="camera">photo_camera</mat-icon>
 
@@ -17,8 +17,8 @@
             <label for="file" class="label-file p-15 fw-700">Choisir une image</label>
             <input type="file" class="input-file" id="file" (change)="onselectFile($event)" />
           </div>
-          <p class="block-right__defaultImage" (click)="setPopup()">> Prenez notre image par defaut</p>
-          <div class="block-right__popup d-flex" *ngIf="popup === true">
+          <p class="block-right__defaultImage" (click)="setPopup()">> Prenez notre image par default</p>
+          <div class="block-right__popup" *ngIf="popup === true">
             <img
               (click)="setFiles($event)"
               class="block-right__popup__image"
@@ -30,32 +30,30 @@
       </div>
     </div>
     <div>
-      <h2 class="mb-50">Ajoutez votre ville</h2>
-      <div class="mb-50 d-flex flex-justify-content-center">
-        <form [formGroup]="cityForm">
-            <mat-form-field floatLabel="never" appearance="fill">
+      <div class="mb-50">
+        <form [formGroup]="updateForm" class="form-update">
+          <h2 class="mb-50">Ajoutez votre ville</h2>
+            <mat-form-field floatLabel="never" class="form-input" >
               <mat-label>City</mat-label>
-              <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city">
+              <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city" >
+              <mat-error>Afin de bénéficier de la météo personnalisée, il est indispensable de renseigner une localisation</mat-error>
             </mat-form-field>
-          <button mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()">Suivant</button>
-        </form>
-      </div>
-    </div>
-    <div>
-      <h2 class="mb-50">Description du calendrier</h2>
-      <div class="mb-50 d-flex flex-justify-content-center">
-        <form [formGroup]="calendarForm">
-          <mat-form-field floatLabel="never" appearance="fill">
-            <mat-label>City</mat-label>
+          <h2 class="mb-50">Description du calendrier</h2>
+          <mat-form-field floatLabel="never" appearance="outline" class="form-input">
+            <mat-label>Description</mat-label>
             <textarea matInput
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5"></textarea>
+                      cdkAutosizeMaxRows="5" formControlName="description"></textarea>
+            <mat-error>Ce champ est requis</mat-error>
           </mat-form-field>
-          <button mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()">Suivant</button>
+          <mat-error></mat-error>
+          <button [disabled]="updateForm.invalid || updateForm.untouched" mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()" class="btn-next">Suivant</button>
         </form>
       </div>
+    </div>
+    <div>
     </div>
   </div>
 </div>

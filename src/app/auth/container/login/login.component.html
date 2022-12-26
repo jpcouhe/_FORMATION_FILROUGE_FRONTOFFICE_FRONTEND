@@ -1,9 +1,11 @@
-<div>
-  <div>
-    <div>
+<div class="container">
+  <div class="landing d-flex flex-column flex-align-items-center flex-justify-content-center">
+    <div class="logo d-flex ">
       <img src="assets/images/icons8-calendar-100.png" alt="">
     </div>
     <h1>Plan your Dreams</h1>
+
+<<<<<<< HEAD
   </div>
   <div>
     <mat-card>
@@ -16,7 +18,7 @@
                   Addresse email incorrecte
                 </mat-error>
               </mat-form-field>
-                <mat-form-field floatLabel="never" appearance="fill">
+                <mat-form-field floatLabel="never" appearance="outline">
                   <mat-label>Mot de passe</mat-label>
                   <input type="password" matInput formControlName="password" data-cy-password name="password">
                   <mat-error data-cy-password-error *ngIf="form.get('password')?.errors?.['required']">Veuillez renseigner un mot de passe</mat-error>
@@ -24,9 +26,9 @@
                 <mat-error *ngIf="error" data-cy-global-status>Utilisateur introuvable</mat-error>
                 <button mat-raised-button color="primary" data-cy-submit (click)="submit()">Se connecter</button>
           </form>
-              <p data-cy-forget-password>Mot de passe oublié ? </p>
-              <hr>
-              <button mat-raised-button color="accent" data-cy-new-account (click)="onCreate()" data-cy-create-account>Créer un nouveau compte</button>
+              <p class="forgot-password" data-cy-forget-password>Mot de passe oublié ? </p>
+              <hr class="separator">
+              <button mat-raised-button color="accent" data-cy-new-account (click)="onCreate()" data-cy-create-account class="btn-create">Créer un nouveau compte</button>
         </mat-card-content>
     </mat-card>
   </div>

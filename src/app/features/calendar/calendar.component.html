@@ -1,16 +1,15 @@
 
   <div class="container-meteo-calendar">
-    <div class="calendar-header">
-      <h1>Mon Calendrier</h1>
-      <p>Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis</p>
-      <!-- <button><a [routerLink]="'authorization'">Liste des partages</a></button>-->
+    <div class="d-flex container-meteo-calendar__header">
+      <div class="d-flex ">
+        <app-meteo></app-meteo>
+      </div>
+      <div class="calendar-header">
+        <h1>Mon Calendrier</h1>
+        <p>Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis</p>
+      </div>
     </div>
       <div class="container-calendar">
-        <div class="d-flex container-header ">
-
-            <app-meteo></app-meteo>
-
-        </div>
         <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" ></full-calendar>
       </div>
   </div>
