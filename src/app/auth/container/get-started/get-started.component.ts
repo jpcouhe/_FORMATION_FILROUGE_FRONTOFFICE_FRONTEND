@@ -63,6 +63,7 @@ export class GetStartedComponent implements OnInit {
       //todo gerer les images
       const city = this.updateForm.get("city")!.value;
       const picture = null;
+      console.log(this.user)
       if(this.updateForm.valid){
         this.userService.updateUser(this.user.userId, this.user.username, this.user.userFirstname, city, picture).pipe(
           tap(()=>{

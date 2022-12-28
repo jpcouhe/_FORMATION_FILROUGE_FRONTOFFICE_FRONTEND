@@ -9,6 +9,7 @@ import {RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {FeaturesRoutingModules} from "./features/features-routing.modules";
 import {CoreModule} from "./core/core.module";
+import {AuthInterceptorProviders} from "./shared/interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import {CoreModule} from "./core/core.module";
     RouterModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

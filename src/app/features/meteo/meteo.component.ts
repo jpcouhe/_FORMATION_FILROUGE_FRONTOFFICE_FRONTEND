@@ -4,6 +4,7 @@ import { WeatherService } from 'src/app/shared/services/weather-service/weather.
 import {min, Subscription} from "rxjs";
 import {d, da} from "@fullcalendar/core/internal-common";
 import {GoogleMapsService} from "../../shared/services/google-maps-service/google-maps.service";
+import {AuthService} from "../../shared/services/auth-service/auth.service";
 
 @Component({
   selector: 'app-meteo',
@@ -31,9 +32,11 @@ export class MeteoComponent implements OnInit, OnDestroy {
   forcast!: any;
 
 
-  constructor(public activeRouter: ActivatedRoute, public weather: WeatherService, private googleMapService: GoogleMapsService) { }
+  constructor(public activeRouter: ActivatedRoute, public weather: WeatherService, private googleMapService: GoogleMapsService, private authService: AuthService) { }
 
   ngOnInit(): void {
+
+
 
 
     this.currentHour = new Date().getHours()

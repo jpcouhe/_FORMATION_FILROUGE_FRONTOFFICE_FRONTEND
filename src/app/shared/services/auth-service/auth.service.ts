@@ -7,12 +7,12 @@ import {BehaviorSubject, catchError, EMPTY, map, Observable, of, ReplaySubject, 
 })
 export class AuthService {
   //On garde quand même une valeur en mémoire, mais pas besoin d'une valeur initiale
-  public isLogged$: ReplaySubject<boolean> = new ReplaySubject(1)
+
   public auth$: BehaviorSubject<any> = new BehaviorSubject<any>(null)
 
   private userId= ''
-
-
+  private isLoggedIn = false;
+  private access_token="";
   constructor(private http: HttpClient) {
   }
 
@@ -23,7 +23,8 @@ export class AuthService {
         tap((user:any) => {
             console.log(user);
           this.userId = user.userId
-          this.isLogged$.next(true);
+          this.isLoggedIn = true;
+          this.access_token = user.token
           this.auth$.next(user)},
           ),
     )
@@ -43,4 +44,12 @@ export class AuthService {
 
   //todo logout
 
+
+  getToken(){
+    return this.access_token
+  }
+
+  isLogged(){
+    return this.isLoggedIn
+  }
 }

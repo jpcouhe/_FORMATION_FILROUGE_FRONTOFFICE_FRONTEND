@@ -4,11 +4,13 @@ import {FeaturesContainerComponent} from "./features-container/features-containe
 import {UsersListComponent} from "./users-list/users-list.component";
 import {CalendarComponent} from "./calendar/calendar.component";
 import {ManageAuthorizationComponent} from "./manage-authorization/manage-authorization.component";
+import {AuthGuardGuard} from "../shared/guards/auth-guard.guard";
 
 const routes: Routes = [
   {
     path:'',
     component: FeaturesContainerComponent,
+    canActivate:[AuthGuardGuard],
     children: [
       {
         path: "calendar/authorization",

@@ -4,6 +4,7 @@ import {ContainerComponent} from "./container/container.component";
 import {LoginComponent} from "./container/login/login.component";
 import {SignupComponent} from "./container/signup/signup.component";
 import {GetStartedComponent} from "./container/get-started/get-started.component";
+import {AuthGuardGuard} from "../shared/guards/auth-guard.guard";
 
 
 const routes: Routes = [
@@ -12,7 +13,7 @@ const routes: Routes = [
     component: ContainerComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register/get-started', component: GetStartedComponent },
+      { path: 'register/get-started', component: GetStartedComponent, canActivate:[AuthGuardGuard] },
     ],
   },
 ];

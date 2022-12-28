@@ -53,7 +53,7 @@ describe("Auth Service", () => {
     })
   })
 
-  it("should return a message if the API give 200 status when i create a user", (done) => {
+  /*it("should return a message if the API give 200 status when i create a user", (done) => {
 
     spectator.service.signup("test", "test", "test@test.fr", "testPassword").subscribe((result) => {
       expect(result).toBeTruthy()
@@ -66,5 +66,5 @@ describe("Auth Service", () => {
       status:200,
       statusText: 'OK'
     })
-  })
+  })*/
 })
