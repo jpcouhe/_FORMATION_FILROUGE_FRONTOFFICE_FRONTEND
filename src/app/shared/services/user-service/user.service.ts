@@ -9,13 +9,14 @@ export class UserService {
   user$ = new BehaviorSubject<any>([]);
   constructor(private http: HttpClient) { }
 
-  updateUser(id: string, firstname: string, lastname: string, city: string, picture: null) {
+  updateUser(userId: string, userName: string, userFirstname: string, userCity: string, UserPicture: null) {
     const formData = new FormData();
-    const user = {lastname: lastname, firstname:firstname, picture, city }
+    const user = {userFirstname, userName, UserPicture, userCity }
+    console.log(user)
     formData.append("user", JSON.stringify(user))
     // todo : prise en charge des images
     // formData.append("image", image)
-    return this.http.put<{message: string}>("http://localhost:8080/api/users/" + id, user)
+    return this.http.put<{message: string}>("http://localhost:8080/api/users/" + userId, user)
   }
 
 
