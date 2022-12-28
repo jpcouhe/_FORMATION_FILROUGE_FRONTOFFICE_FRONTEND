@@ -4,14 +4,10 @@
       <img src="assets/images/icons8-calendar-100.png" alt="">
     </div>
     <h1>Plan your Dreams</h1>
-
-<<<<<<< HEAD
-  </div>
-  <div>
-    <mat-card>
+    <mat-card class="card__login">
         <mat-card-content>
           <form [formGroup]="form">
-              <mat-form-field floatLabel="never" appearance="fill">
+              <mat-form-field floatLabel="never" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" data-cy-email name="email">
                 <mat-error data-cy-email-error *ngIf="form.get('email')?.errors?.['required'] || form.get('email')?.errors?.['email']">
@@ -24,7 +20,7 @@
                   <mat-error data-cy-password-error *ngIf="form.get('password')?.errors?.['required']">Veuillez renseigner un mot de passe</mat-error>
                 </mat-form-field>
                 <mat-error *ngIf="error" data-cy-global-status>Utilisateur introuvable</mat-error>
-                <button mat-raised-button color="primary" data-cy-submit (click)="submit()">Se connecter</button>
+                <button mat-raised-button color="primary" data-cy-submit (click)="submit()" class="btn-login">Se connecter</button>
           </form>
               <p class="forgot-password" data-cy-forget-password>Mot de passe oublié ? </p>
               <hr class="separator">

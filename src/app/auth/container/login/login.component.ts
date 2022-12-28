@@ -42,7 +42,7 @@ public submit() {
         return EMPTY
       })).subscribe((resultat) => {
 
-         this.router.navigateByUrl('/accueil/')
+         this.router.navigateByUrl('/accueil/calendar')
     })
   }
   }
