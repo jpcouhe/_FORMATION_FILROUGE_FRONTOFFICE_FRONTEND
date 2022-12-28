@@ -13,6 +13,9 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 import {EditEventComponent} from "./edit-event/edit-event.component";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {Router} from "@angular/router";
+import {EventService} from "../../shared/services/event-service/event.service";
+import {UserService} from "../../shared/services/user-service/user.service";
+import {AuthService} from "../../shared/services/auth-service/auth.service";
 
 
 @Component({
@@ -58,17 +61,18 @@ export class CalendarComponent implements OnInit{
   currentEvents: EventApi[] = [];
 
   event$:BehaviorSubject<any> = new BehaviorSubject<any>(
-    [{"id": 10, "title":"event 1","start": new Date()},
-    {"id": 20, "title":"event 2","start": new Date()}
-
-
+    [
   ])
 
+  user!: any
 
-  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private route: Router) {
+  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private route: Router, private eventService: EventService, private userService: UserService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.user = this.authService.auth$.getValue()
+    this.events1 = this.event$.getValue();
+    console.log(this.user)
     //todo appel réseau pour récupérer les events
     //todo faire appel réseau avec id d'un calendrier
   }
@@ -119,25 +123,14 @@ export class CalendarComponent implements OnInit{
     const ref = this.dialog.open(FormEventComponent, dialogConfig)
     ref.afterClosed().subscribe((data:any) => {
       if(data) {
-        const newEvent = {
-          id: createEventId(),
-          title: data.title,
-          start: data.start,
-          end: data.end
-        }
-        // todo événement sur 1 journée? end?
-        const eventList = this.event$.getValue();
-        //todo appel réseau pour add un event
-        //todo appel réseau pour add un event en fonction d'un id
-        const newList = [...eventList, newEvent]
-
-        this.event$.next(newList)
-
-
+        console.log(data)
+        this.eventService.addEvent(data.title, data.start, data.end, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
+          const eventList = this.event$.getValue();
+          const newList = [...eventList, newEvent]
+          this.event$.next(newList)
+        })
       }
     })
-
-
   }
 
   private redirect() {

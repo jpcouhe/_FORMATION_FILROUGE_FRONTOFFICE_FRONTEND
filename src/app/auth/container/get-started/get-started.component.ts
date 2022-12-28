@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
-import {catchError, EMPTY, tap} from "rxjs";
+import {catchError, EMPTY, forkJoin, mergeMap, mergeWith, switchAll, switchMap, tap} from "rxjs";
 import {User} from "../../../shared/models/User.model";
 import {UserService} from "../../../shared/services/user-service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {PlanningService} from "../../../shared/services/planning-service/planning.service";
 
 @Component({
   selector: 'app-get-started',
@@ -20,7 +21,7 @@ export class GetStartedComponent implements OnInit {
   updateForm!: FormGroup;
   calendarForm!: FormGroup;
 
-  constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router, private planningService: PlanningService) { }
 
   ngOnInit(): void {
       //todo requete pour creer un calendrier avec description
@@ -62,11 +63,20 @@ export class GetStartedComponent implements OnInit {
       this.selectedFile ? (imgProfil = this.selectedFile) : (imgProfil = this.url)
       //todo gerer les images
       const city = this.updateForm.get("city")!.value;
+      const titlePlanning = this.updateForm.get('title')!.value;
+      const descriptionPlanning = this.updateForm.get('description')!.value;
+      const date = new Date()
+
+
       const picture = null;
-      console.log(this.user)
       if(this.updateForm.valid){
+        this.planningService.create(titlePlanning, descriptionPlanning, date, this.user.userId).subscribe()
+
+        //todo Ne me plait pas le getUserById
         this.userService.updateUser(this.user.userId, this.user.username, this.user.userFirstname, city, picture).pipe(
-          tap(()=>{
+          tap((user)=>{
+              this.userService.getUserById(this.user.userId);
+              console.log(this.userService.user$.getValue())
               this.router.navigate(['/accueil/calendar'])
           }),
           catchError((err) =>{

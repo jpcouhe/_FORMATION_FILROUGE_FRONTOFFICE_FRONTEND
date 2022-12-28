@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, catchError, EMPTY, map, Observable, of, ReplaySubject, tap} from "rxjs";
+import {UserService} from "../user-service/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class AuthService {
     return this.http.post<any>("http://localhost:8080/api/auth/signin", userCredential)
       .pipe(
         tap((user:any) => {
-            console.log(user);
           this.userId = user.userId
           this.isLoggedIn = true;
           this.access_token = user.token

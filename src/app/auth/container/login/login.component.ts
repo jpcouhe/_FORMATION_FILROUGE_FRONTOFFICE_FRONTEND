@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../signup/signup.component";
 import {FormEventComponent} from "../../../features/calendar/form-event/form-event.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../../../shared/services/user-service/user.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   })
   error!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private snackBar:MatSnackBar) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private snackBar:MatSnackBar, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -40,8 +41,8 @@ public submit() {
           panelClass: ['red-snackbar','login-snackbar'],
         })
         return EMPTY
-      })).subscribe((resultat) => {
-
+      })).subscribe((user) => {
+        this.userService.user$.next(user)
          this.router.navigateByUrl('/accueil/calendar')
     })
   }

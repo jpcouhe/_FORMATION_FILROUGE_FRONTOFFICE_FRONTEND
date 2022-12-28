@@ -25,7 +25,6 @@ export class FormEventComponent implements OnInit {
   }
 
   save() {
-    console.log("salut je veux ajouter un événement")
     if(this.eventForm.valid){
         this.dialogRef.close(this.eventForm.value);
     }
