@@ -29,12 +29,14 @@ export class AuthService {
     )
   }
 
-  public signup(firstname: string, lastname: string, email: string, password: string){
+  public signup(userName: string, userFirstname: string, userPassword: string, userEmail: string, userPicture: null, userCity: null){
     return this.http.post<{message: string}>('http://localhost:8080/api/auth/signup', {
-      firstname,
-      lastname,
-      email,
-      password
+      userName,
+      userFirstname,
+      userPassword,
+      userEmail,
+      userPicture,
+      userCity
     })
   }
 

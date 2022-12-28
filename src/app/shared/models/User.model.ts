@@ -1,10 +1,11 @@
 export interface User {
-  id: string;
-  name: string;
-  firstname: string;
-  email:string;
-  picture:string;
+  userId: string;
+  username: string;
+  userFirstname: string;
+  userEmail:string;
+  userPicture:string;
   isActive: boolean;
-  roleId: number;
-  city: string;
+  roldeId: number;
+  token: string;
+  userCity: string;
 }

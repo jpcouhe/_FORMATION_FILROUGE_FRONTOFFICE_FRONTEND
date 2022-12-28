@@ -29,10 +29,11 @@ export class GetStartedComponent implements OnInit {
         tap((user) => {
           this.user = user;
         })
-      )
+      ).subscribe();
 
       this.updateForm = this.formBuilder.group({
         city:['', Validators.required],
+        title:['', Validators.required],
         description:['', Validators.required]
       })
   }
@@ -59,10 +60,11 @@ export class GetStartedComponent implements OnInit {
   onSubmit() {
       let imgProfil;
       this.selectedFile ? (imgProfil = this.selectedFile) : (imgProfil = this.url)
-
-
+      //todo gerer les images
+      const city = this.updateForm.get("city")!.value;
+      const picture = null;
       if(this.updateForm.valid){
-        this.userService.updateUser(this.user.id, imgProfil, this.user.firstname, this.user.name, this.updateForm.getRawValue()).pipe(
+        this.userService.updateUser(this.user.userId, this.user.username, this.user.userFirstname, city, picture).pipe(
           tap(()=>{
               this.router.navigate(['/accueil/calendar'])
           }),

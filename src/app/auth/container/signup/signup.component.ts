@@ -58,14 +58,16 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if(this.signupForm.valid){
+      const city = null;
+      const picture = null;
       const firstname =  this.signupForm.get("firstname")!.value;
       const name =  this.signupForm.get("name")!.value;
       const email =  this.signupForm.get("emailSignup")!.value;
       const password =  this.signupForm.get("passwordSignup")!.value;
-      this.authService.signup(firstname, name, email, password).pipe(
+      this.authService.signup(name, firstname, password, email, picture, city).pipe(
         switchMap(()=> this.authService.login(email, password)),
         tap(()=>{
-          this.router.navigate(["/register/get-started"])
+          this.router.navigate(["auth/register/get-started"])
           this.closeTab()
         }),
         catchError((error) => {

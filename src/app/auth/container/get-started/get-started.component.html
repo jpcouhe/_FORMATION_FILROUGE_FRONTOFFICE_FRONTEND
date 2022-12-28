@@ -38,6 +38,14 @@
               <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city" >
               <mat-error>Afin de bénéficier de la météo personnalisée, il est indispensable de renseigner une localisation</mat-error>
             </mat-form-field>
+
+          <h2 class="mb-50">Titre du calendrier</h2>
+          <mat-form-field floatLabel="never" class="form-input" >
+            <mat-label>Titre</mat-label>
+            <input type="text" matInput data-cy-city name="title" formControlName="title" >
+            <mat-error>Titre requis</mat-error>
+          </mat-form-field>
+          
           <h2 class="mb-50">Description du calendrier</h2>
           <mat-form-field floatLabel="never" appearance="outline" class="form-input">
             <mat-label>Description</mat-label>
