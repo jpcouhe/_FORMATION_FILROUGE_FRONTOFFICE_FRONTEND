@@ -18,4 +18,8 @@ export class PlanningService {
     })
   }
 
+  getPlanning(planningId: string){
+    return this.http.get<any>("http://localhost:8080/api/planning/" + planningId)
+  }
+
 }

@@ -16,6 +16,7 @@ import {Router} from "@angular/router";
 import {EventService} from "../../shared/services/event-service/event.service";
 import {UserService} from "../../shared/services/user-service/user.service";
 import {AuthService} from "../../shared/services/auth-service/auth.service";
+import {PlanningService} from "../../shared/services/planning-service/planning.service";
 
 
 @Component({
@@ -25,7 +26,7 @@ import {AuthService} from "../../shared/services/auth-service/auth.service";
 })
 export class CalendarComponent implements OnInit{
 
-  events1 = [];
+  events1: {}[] = [];
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -60,21 +61,19 @@ export class CalendarComponent implements OnInit{
   };
   currentEvents: EventApi[] = [];
 
-  event$:BehaviorSubject<any> = new BehaviorSubject<any>(
-    [
-  ])
+  event$:BehaviorSubject<any> = new BehaviorSubject<any>([])
 
   user!: any
 
-  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private route: Router, private eventService: EventService, private userService: UserService, private authService: AuthService) {
+  constructor(private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private route: Router, private eventService: EventService, private userService: UserService, private authService: AuthService, private planningService: PlanningService,private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.user = this.authService.auth$.getValue()
-    this.events1 = this.event$.getValue();
-    console.log(this.user)
-    //todo appel réseau pour récupérer les events
-    //todo faire appel réseau avec id d'un calendrier
+    this.planningService.getPlanning(this.user.planningsByUserId[0].planningId).subscribe((data)=>{
+      this.events1 = data.eventsByPlanningId
+      this.event$.next(data.eventsByPlanningId)
+    })
   }
 
 
@@ -89,7 +88,9 @@ export class CalendarComponent implements OnInit{
 
     ref.afterClosed().subscribe(
       data => {
+
         console.log(data)
+        this.events1.push(data)
         const eventList = this.event$.getValue();
         const newEventList = []
 
@@ -101,6 +102,7 @@ export class CalendarComponent implements OnInit{
           }
         }
         this.event$.next(newEventList)
+
       }
     )
 
@@ -123,11 +125,13 @@ export class CalendarComponent implements OnInit{
     const ref = this.dialog.open(FormEventComponent, dialogConfig)
     ref.afterClosed().subscribe((data:any) => {
       if(data) {
-        console.log(data)
+
         this.eventService.addEvent(data.title, data.start, data.end, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
           const eventList = this.event$.getValue();
           const newList = [...eventList, newEvent]
+          console.log(this.events1)
           this.event$.next(newList)
+          this.calendarOptions.events = [...this.events1, newEvent]
         })
       }
     })
