@@ -13,19 +13,12 @@
 </section>
 
 <section>
-  <mat-card (click)="displayModal()" class="user-card p-10 d-flex">
+  <mat-card (click)="displayModal(user.userId)" class="user-card p-10 d-flex" *ngFor="let user of userList$ | async">
     <mat-card-header class="d-flex">
+      <p>{{user | json}}</p>
       <img mat-card-avatar src="/assets/images/lion.jpg">
-      <mat-card-title class="user-card__header__text">{{ "Jean-philippe" | titlecase }} {{ "Couhe" | titlecase }}</mat-card-title>
-      <mat-card-subtitle class="user-card__header__subtitle">jeanphilippe.couhe@hotmail.fr</mat-card-subtitle>
+      <mat-card-title class="user-card__header__text">{{ user.userFirstname | titlecase }} {{ user.userName | titlecase }}</mat-card-title>
+      <mat-card-subtitle class="user-card__header__subtitle">{{user.userEmail}}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
- <!-- <div >
-    &lt;!&ndash;<img class="user-card__image" [src]="" alt="#" />&ndash;&gt;
-    <div class="user-card__header d-flex flex-column flex-justify-content-center fs-16">
-      <div class="user-card__header__text d-flex mb-20">
-        <p>{{ "Jean-philippe" | titlecase }} {{ "Couhe" | titlecase }}</p>
-      </div>
-    </div>
-  </div>-->
 </section>

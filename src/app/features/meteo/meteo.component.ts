@@ -101,8 +101,8 @@ export class MeteoComponent implements OnInit, OnDestroy {
     this.googleMapService.getPlaceAutocomplete(this.addressText);
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.subscription2.unsubscribe();
+   /* this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();*/
   }
 
   getForecast(value: string){

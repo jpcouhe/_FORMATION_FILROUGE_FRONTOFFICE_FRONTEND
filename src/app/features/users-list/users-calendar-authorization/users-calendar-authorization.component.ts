@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {AuthService} from "../../../shared/services/auth-service/auth.service";
 
 @Component({
   selector: 'app-users-calendar-authorization',
@@ -9,7 +11,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class UsersCalendarAuthorizationComponent implements OnInit {
   authorizationForm!: FormGroup
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.authorizationForm = this.fb.group({
@@ -20,7 +22,13 @@ export class UsersCalendarAuthorizationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("Todo request")
+    const read = this.authorizationForm.get('read')!.value
+    const write = this.authorizationForm.get('write')!.value
+    const modification = this.authorizationForm.get('modification')!.value
+
+    console.log(read, "ecriture")
+    console.log(write, "write")
+    console.log(modification, "modification")
     //todo switch update en fonction du questionnaire : On passe l'id de l'utilisateur, celui du calendrier et les autorisation dans la table
   }
 }

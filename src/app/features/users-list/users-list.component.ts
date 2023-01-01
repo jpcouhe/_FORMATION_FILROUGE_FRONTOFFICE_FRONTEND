@@ -7,6 +7,7 @@ import {FormEventComponent} from "../calendar/form-event/form-event.component";
 import {
   UsersCalendarAuthorizationComponent
 } from "./users-calendar-authorization/users-calendar-authorization.component";
+import {UserService} from "../../shared/services/user-service/user.service";
 
 @Component({
   selector: 'app-users-list',
@@ -15,18 +16,21 @@ import {
 })
 export class UsersListComponent implements OnInit {
   filteredString: string = "";
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog) { }
+  userList$ = this.userService.getAllUsers();
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private userService : UserService) { }
 
   ngOnInit(): void {
     //todo rechercher tout les utilisateurs
   }
 
-  displayModal() {
+  displayModal(userId: any) {
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
     dialogConfig.width = "600px";
     dialogConfig.maxWidth = "80%";
+    dialogConfig.data = userId
     this.dialog.open(UsersCalendarAuthorizationComponent, dialogConfig)
   }
 }

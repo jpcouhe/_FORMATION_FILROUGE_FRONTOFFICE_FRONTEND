@@ -22,8 +22,11 @@ export class UserService {
 
   getUserById(userId:string){
     this.http.get<User>("http://localhost:8080/api/users/" + userId).pipe(tap((user)=>{
-      console.log(user)
         this.authService.auth$.next(user)
     })).subscribe();
+  }
+
+  getAllUsers(){
+    return this.http.get<any>("http://localhost:8080/api/users")
   }
 }

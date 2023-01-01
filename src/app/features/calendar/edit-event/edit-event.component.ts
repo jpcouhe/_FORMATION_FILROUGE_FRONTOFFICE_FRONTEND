@@ -15,7 +15,6 @@ export class EditEventComponent implements OnInit {
   }
 
   delete(data: any) {
-    console.log("salut je veux supprimer mon événement")
     this.dialogRef.close(data)
   }
 }

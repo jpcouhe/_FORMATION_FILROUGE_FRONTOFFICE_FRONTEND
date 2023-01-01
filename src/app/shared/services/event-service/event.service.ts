@@ -13,5 +13,8 @@ export class EventService {
     return this.http.post<any>('http://localhost:8080/api/event', event )
   }
 
+  deleteEvent(eventId: string){
+    return this.http.delete('http://localhost:8080/api/event/' + eventId)
+  }
 
 }

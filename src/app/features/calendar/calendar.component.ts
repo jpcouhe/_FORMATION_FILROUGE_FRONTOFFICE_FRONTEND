@@ -9,7 +9,7 @@ import listPlugin from '@fullcalendar/list';
 import {createEventId, INITIAL_EVENTS} from "../../shared/Utils/event-utils";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {FormEventComponent} from "./form-event/form-event.component";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of, switchAll, switchMap} from "rxjs";
 import {EditEventComponent} from "./edit-event/edit-event.component";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {Router} from "@angular/router";
@@ -86,30 +86,23 @@ export class CalendarComponent implements OnInit{
     dialogConfig.data = clickInfo;
     const ref = this.dialog.open(EditEventComponent, dialogConfig)
 
-    ref.afterClosed().subscribe(
-      data => {
-
-        console.log(data)
-        this.events1.push(data)
-        const eventList = this.event$.getValue();
-        const newEventList = []
-
-        for(let i = 0; i<eventList.length; i++){
-
-          if(eventList[i].id != data){
-            //todo appel réseau pour delete
-            newEventList.push(eventList[i])
-          }
-        }
-        this.event$.next(newEventList)
-
+    ref.afterClosed().pipe(
+      switchMap((dataId) => {
+        return this.eventService.deleteEvent(dataId)
+      })
+    ).subscribe(
+      () => {
+        /*this.events1 = this.events1.filter((eventId:any) => {
+            return eventId.id != clickInfo.event.id
+        })*/
+        clickInfo.event.remove();
       }
     )
+
 
   }
 
   handleEvents(events: EventApi[]) {
-    console.log("salut")
     //todo appel réseau pour edite l'event
     this.currentEvents = events;
     this.changeDetector.detectChanges();
@@ -129,6 +122,8 @@ export class CalendarComponent implements OnInit{
         this.eventService.addEvent(data.title, data.start, data.end, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
           const eventList = this.event$.getValue();
           const newList = [...eventList, newEvent]
+          this.events1 = [...this.events1, newEvent]
+          this.changeDetector.detectChanges()
           console.log(this.events1)
           this.event$.next(newList)
           this.calendarOptions.events = [...this.events1, newEvent]
