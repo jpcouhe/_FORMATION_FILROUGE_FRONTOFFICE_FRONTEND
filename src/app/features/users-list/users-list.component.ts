@@ -8,6 +8,7 @@ import {
   UsersCalendarAuthorizationComponent
 } from "./users-calendar-authorization/users-calendar-authorization.component";
 import {UserService} from "../../shared/services/user-service/user.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-users-list',
@@ -16,11 +17,16 @@ import {UserService} from "../../shared/services/user-service/user.service";
 })
 export class UsersListComponent implements OnInit {
   filteredString: string = "";
-  userList$ = this.userService.getAllUsers();
+  //todo filter avec userId
+  private user: any;
+  userList$! :Observable<any>;
+
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private userService : UserService) { }
 
   ngOnInit(): void {
-    //todo rechercher tout les utilisateurs
+    this.user = this.authService.auth$.getValue();
+    this.userList$ = this.userService.getAllUsers(this.user.userId);
+
   }
 
   displayModal(userId: any) {
@@ -30,7 +36,10 @@ export class UsersListComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.width = "600px";
     dialogConfig.maxWidth = "80%";
-    dialogConfig.data = userId
+    dialogConfig.data = {
+      userId,
+      planningId: this.user.planningsByUserId[0].planningId
+    }
     this.dialog.open(UsersCalendarAuthorizationComponent, dialogConfig)
   }
 }

@@ -22,4 +22,9 @@ export class PlanningService {
     return this.http.get<any>("http://localhost:8080/api/planning/" + planningId)
   }
 
+  interactWithPlanning(userId: number, planningId: number, permissionId: number){
+    let interactData = {userId, planningId, permissionId}
+    this.http.post<any>("http://localhost:8080/api/interact", interactData).subscribe();
+  }
+
 }

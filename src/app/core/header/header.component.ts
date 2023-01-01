@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../../auth/container/signup/signup.component";
 import {ProfilComponent} from "../../features/profil/profil.component";
+import {AuthService} from "../../shared/services/auth-service/auth.service";
+import {User} from "../../shared/models/User.model";
+import {UserService} from "../../shared/services/user-service/user.service";
 
 @Component({
   selector: 'app-header',
@@ -9,10 +12,22 @@ import {ProfilComponent} from "../../features/profil/profil.component";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(private dialog : MatDialog) { }
+  user!: any;
+  displaySharedCalender: boolean = false;
+  planningWithInteraction!: any
+  constructor(private dialog : MatDialog, private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.user = this.authService.auth$.getValue()
+    console.log(this.user)
+    this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
+      this.planningWithInteraction = data
+      if(this.planningWithInteraction.length == 0){
+        this.displaySharedCalender = false
+      }else{
+        this.displaySharedCalender = true
+      }
+    })
   }
 
   displayProfil() {
@@ -26,5 +41,9 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     //todo faire le logout
+  }
+
+  goToSharedCalendar(planningId: any) {
+      console.log(planningId)
   }
 }

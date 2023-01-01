@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, tap} from "rxjs";
+import {BehaviorSubject, filter, map, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth-service/auth.service";
 import {User} from "../../models/User.model";
@@ -26,7 +26,14 @@ export class UserService {
     })).subscribe();
   }
 
-  getAllUsers(){
-    return this.http.get<any>("http://localhost:8080/api/users")
+  getAllUsers(filterId: any){
+    return this.http.get<any>("http://localhost:8080/api/users").pipe(
+        map((users => users.filter((user: any) => user.userId !== filterId)))
+    )
   }
+
+  getPlanningWithInteraction(userId: any){
+    return this.http.get<any>("http://localhost:8080/api/interact/user/" + userId)
+  }
+
 }
