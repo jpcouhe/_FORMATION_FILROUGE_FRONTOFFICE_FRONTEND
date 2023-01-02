@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {Router} from "@angular/router";
@@ -8,24 +8,30 @@ import {
   UsersCalendarAuthorizationComponent
 } from "./users-calendar-authorization/users-calendar-authorization.component";
 import {UserService} from "../../shared/services/user-service/user.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
   filteredString: string = "";
   //todo filter avec userId
   private user: any;
+  users!: [];
   userList$! :Observable<any>;
+  subscription!: Subscription
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private userService : UserService) { }
 
   ngOnInit(): void {
     this.user = this.authService.auth$.getValue();
-    this.userList$ = this.userService.getAllUsers(this.user.userId);
+    /*this.userList$ = this.userService.getAllUsers(this.user.userId);*/
+    this.subscription = this.userService.getAllUsers(this.user.userId).subscribe((data)=>{
+        this.users = data
+      console.log(this.users)
+    })
 
   }
 
@@ -41,5 +47,9 @@ export class UsersListComponent implements OnInit {
       planningId: this.user.planningsByUserId[0].planningId
     }
     this.dialog.open(UsersCalendarAuthorizationComponent, dialogConfig)
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe()
   }
 }

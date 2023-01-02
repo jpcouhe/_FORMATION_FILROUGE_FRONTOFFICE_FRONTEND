@@ -21,9 +21,9 @@ export class UserService {
   }
 
   getUserById(userId:string){
-    this.http.get<User>("http://localhost:8080/api/users/" + userId).pipe(tap((user)=>{
+    return this.http.get<User>("http://localhost:8080/api/users/" + userId).pipe(tap((user)=>{
         this.authService.auth$.next(user)
-    })).subscribe();
+    }))
   }
 
   getAllUsers(filterId: any){
@@ -34,6 +34,10 @@ export class UserService {
 
   getPlanningWithInteraction(userId: any){
     return this.http.get<any>("http://localhost:8080/api/interact/user/" + userId)
+  }
+
+  getIfUserHaveInteraction(userId: any, planningId: any){
+    return this.http.get<any>("http://localhost:8080/api/interact/planning/" + userId + '/' + planningId)
   }
 
 }

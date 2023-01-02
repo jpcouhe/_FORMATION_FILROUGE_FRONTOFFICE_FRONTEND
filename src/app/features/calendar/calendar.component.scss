@@ -1,7 +1,6 @@
-.container-meteo-calendar{
-/*  min-height: 100%;*/
-  /*height: calc(100vh - 120px);*/
-}
+@use "../../../style/Utils/breakpoints" as *;
+
+
 
 .container-calendar{
  /* margin-top: 60px;*/
@@ -11,8 +10,23 @@
 
 }
 .container-meteo-calendar__header{
-    margin: 10px 20px 0;
+    margin: 10px 40px 0;
+  display: flex;
+  align-items: center;
+
+
+  @include md{
+display: block;
+    margin: 10px 10px 20px;
+  }
 }
+
+.container-meteo-calendar__responsive{
+  @include lg {
+    display: block;
+  }
+}
+
 .container-header{
   display: flex;
   max-width: 300px;
@@ -37,4 +51,38 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @include md{
+    margin-top:30px;
+    margin-left: 0;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+/*  h1{
+    @include md{
+    text-align: center;
+    }
+  }
+
+  p{
+    @include md{
+      text-align: center;
+    }
+  }*/
+}
+
+.btn-shared{
+  margin-left: auto;
+
+  @include md{
+   display: flex;
+    justify-content: center;
+  }
+}
+
+full-calendar {
+  @include sm{
+    font-size: 70%;
+  }
 }

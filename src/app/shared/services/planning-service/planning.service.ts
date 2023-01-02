@@ -18,8 +18,12 @@ export class PlanningService {
     })
   }
 
-  getPlanning(planningId: string){
+  getPlanningById(planningId: string){
     return this.http.get<any>("http://localhost:8080/api/planning/" + planningId)
+  }
+
+  getPlanning(userId: string){
+    return this.http.get<any>("http://localhost:8080/api/user/" + userId + "/planning")
   }
 
   interactWithPlanning(userId: number, planningId: number, permissionId: number){

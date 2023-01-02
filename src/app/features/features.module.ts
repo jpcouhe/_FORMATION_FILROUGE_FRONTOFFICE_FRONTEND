@@ -18,6 +18,7 @@ import { EditEventComponent } from './calendar/edit-event/edit-event.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersCalendarAuthorizationComponent } from './users-list/users-calendar-authorization/users-calendar-authorization.component';
 import { ManageAuthorizationComponent } from './manage-authorization/manage-authorization.component';
+import {FilterPipe} from "../shared/pipes/filter.pipe";
 
 
 
@@ -34,7 +35,7 @@ import { ManageAuthorizationComponent } from './manage-authorization/manage-auth
     EditEventComponent,
     UsersListComponent,
     UsersCalendarAuthorizationComponent,
-    ManageAuthorizationComponent
+    ManageAuthorizationComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +45,7 @@ import { ManageAuthorizationComponent } from './manage-authorization/manage-auth
     ReactiveFormsModule,
     FullCalendarModule,
     MatDatepickerModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class FeaturesModule { }

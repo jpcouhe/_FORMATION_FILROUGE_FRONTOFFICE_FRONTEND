@@ -13,8 +13,9 @@ export class FilterPipe implements PipeTransform {
     const users = [];
     for (const user of value) {
       if (
-        user["firstname"].toUpperCase().includes(filteredString.toUpperCase()) ||
-        user["lastname"].toUpperCase().includes(filteredString.toUpperCase())
+
+        user["userFirstname"].toUpperCase().includes(filteredString.toUpperCase()) ||
+        user["userName"].toUpperCase().includes(filteredString.toUpperCase())
       ) {
         users.push(user);
       }

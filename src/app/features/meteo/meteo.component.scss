@@ -1,10 +1,20 @@
+@use "../../../style/Utils/breakpoints" as *;
 .container-meteo{
   display: flex;
+
+  @include lg {
+    flex-direction: column;
+  }
 }
 
-.container-meteo__left{
-  width: 500px;
-}
+/*.container-meteo__left{
+  max-width: 500px;
+  width: 100%;
+
+  @include sm {
+   width: 100%;
+  }
+}*/
 .city-search-wrapper {
   display: flex;
   flex-flow: column;
@@ -39,6 +49,10 @@
   position: relative;
   width: 80%;
   box-sizing: border-box;
+
+  @include sm {
+    display: none;
+  }
 }
 
 .search-city-input {

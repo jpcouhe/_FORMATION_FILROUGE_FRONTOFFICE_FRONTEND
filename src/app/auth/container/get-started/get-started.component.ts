@@ -72,17 +72,14 @@ export class GetStartedComponent implements OnInit {
       if(this.updateForm.valid){
         this.planningService.create(titlePlanning, descriptionPlanning, date, this.user.userId).subscribe()
 
-        //todo Ne me plait pas le getUserById
         this.userService.updateUser(this.user.userId, this.user.username, this.user.userFirstname, city, picture).pipe(
-          tap((user)=>{
-              this.userService.getUserById(this.user.userId);
-              console.log(this.userService.user$.getValue())
-              this.router.navigate(['/accueil/calendar'])
-          }),
+          switchMap(() =>   this.userService.getUserById(this.user.userId)),
           catchError((err) =>{
             return EMPTY
           })
-        ).subscribe()
+        ).subscribe(()=>{
+          this.router.navigate(['/accueil/calendar'])
+        })
       }
 
       //todo requete pour creer un calendrier avec description

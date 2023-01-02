@@ -17,12 +17,12 @@ const routes: Routes = [
         component: ManageAuthorizationComponent
       },
       {
-        path:"calendar",
-        component: CalendarComponent,
-      },
-      {
         path: "calendar/:id",
         component:CalendarComponent
+      },
+      {
+        path:"calendar",
+        component: CalendarComponent,
       },
       {
         path: "users",

@@ -1,13 +1,19 @@
 
   <div class="container-meteo-calendar">
     <div class="d-flex container-meteo-calendar__header">
-      <div class="d-flex ">
+      <div class="d-flex flex-justify-content-center container-meteo-calendar__responsive ">
         <app-meteo></app-meteo>
       </div>
-      <div class="calendar-header">
-        <h1>Mon Calendrier</h1>
-        <p>Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis Odio accusam facer no volupdtua eros sed molestie tempor sit dolor lorem est quis</p>
+      <div class="calendar-header" *ngIf="!isShareCalendar">
+        <h1>{{user.planningsByUserId[0].planningTitle}}</h1>
+        <p>{{user.planningsByUserId[0].planningDescription}}</p>
       </div>
+      <div class="calendar-header" *ngIf="isShareCalendar">
+        <span>CALENDRIER PARTAGE</span>
+        <h1>{{shareCalendar.planningTitle}}</h1>
+        <p>{{shareCalendar.planningDescription}}</p>
+      </div>
+      <a *ngIf="!isShareCalendar" class="btn-shared" href="#"><button mat-raised-button color="accent" ><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
     </div>
       <div class="container-calendar">
         <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" ></full-calendar>

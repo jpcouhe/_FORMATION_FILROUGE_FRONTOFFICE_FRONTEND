@@ -2,18 +2,11 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {ActivatedRoute} from "@angular/router";
 import { WeatherService } from 'src/app/shared/services/weather-service/weather.service';
 import {
-  combineAll,
-  combineLatestAll,
-  concatMap,
   forkJoin,
-  mergeMap,
-  min,
   Subscription,
   switchMap,
   tap,
-  zipAll
 } from "rxjs";
-import {d, da} from "@fullcalendar/core/internal-common";
 import {GoogleMapsService} from "../../shared/services/google-maps-service/google-maps.service";
 import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {User} from "../../shared/models/User.model";

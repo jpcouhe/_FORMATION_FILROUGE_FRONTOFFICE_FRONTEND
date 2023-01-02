@@ -10,11 +10,11 @@ export class EventService {
 
   addEvent(eventName: string, eventStartDate: Date, eventEndDate: Date, planningId: string ){
     const event = {eventName, eventStartDate, eventEndDate, planningId}
-    return this.http.post<any>('http://localhost:8080/api/event', event )
+    return this.http.post<any>('http://localhost:8080/api/planning/event', event )
   }
 
   deleteEvent(eventId: string){
-    return this.http.delete('http://localhost:8080/api/event/' + eventId)
+    return this.http.delete('http://localhost:8080/api/planning/event/' + eventId)
   }
 
 }

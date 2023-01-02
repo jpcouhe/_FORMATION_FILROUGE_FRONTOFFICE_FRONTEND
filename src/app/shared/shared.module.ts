@@ -13,8 +13,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     CommonModule,
     MaterialModule
   ],
-  exports:[
-    MaterialModule
-  ]
+    exports: [
+        MaterialModule,
+        FilterPipe
+    ]
 })
 export class SharedModule { }
