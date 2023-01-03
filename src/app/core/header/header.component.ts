@@ -39,11 +39,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    //todo faire le logout
+    this.authService.logout()
+    this.route.navigateByUrl("/")
   }
 
   goToSharedCalendar(planningId: any) {
-
       this.route.navigateByUrl("accueil/calendar/" + planningId)
   }
 }

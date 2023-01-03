@@ -156,6 +156,7 @@ export class CalendarComponent implements OnInit{
     dialogConfig.maxWidth = "80%";
 
     const ref = this.dialog.open(FormEventComponent, dialogConfig)
+
     if(this.route.snapshot.params['id'] !== undefined){
       ref.afterClosed().subscribe((data:any) => {
         if(data) {

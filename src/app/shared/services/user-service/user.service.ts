@@ -32,6 +32,16 @@ export class UserService {
     )
   }
 
+  updateUserPassword(userId: string, userOldPassword: String, userNewPassword: String){
+
+    const credential = {
+      userNewPassword:userNewPassword,
+      userOldPassword:userOldPassword
+    }
+    return this.http.put<any>("http://localhost:8080/api/users/password/" + userId, credential)
+  }
+
+
   getPlanningWithInteraction(userId: any){
     return this.http.get<any>("http://localhost:8080/api/interact/user/" + userId)
   }

@@ -41,8 +41,13 @@ export class AuthService {
     })
   }
 
+  public logout(){
+      this.userId= ''
+      this.isLoggedIn = false;
+      this.access_token="";
+      this.auth$.next(null)
+  }
 
-  //todo logout
 
 
   getToken(){

@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import {AuthService} from "../services/auth-service/auth.service";
 
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
@@ -15,6 +16,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     // todo vérifier ?
+/*
+    if(request.headers.has("skip")){
+      console.log("salut")
+      console.log(request)
+      const newRequest = request.clone({
+        headers: request.headers.delete("skip")
+      })
+      console.log(newRequest)
+      return next.handle(newRequest);
+    }
+*/
+
     if(request.url.includes('openweather')){
         return next.handle(request)
     }else{

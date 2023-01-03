@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {first, map, Observable, Subject} from "rxjs";
 
 @Injectable({
@@ -11,6 +11,12 @@ export class WeatherService {
   private readonly appID = "a8d6c44e712048000db043276e5b5b57";
 
   constructor(public http: HttpClient) {
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'skip': "true"
+    })
   }
 
   getWeather(city: string, metric: 'metric' | 'imperial' = 'metric'): Observable<any> {

@@ -2,6 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../shared/models/User.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ValidityFormService} from "../../../../shared/services/validify-form/validity-form.service";
+import {UserService} from "../../../../shared/services/user-service/user.service";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profil-password',
@@ -10,18 +14,42 @@ import {ValidityFormService} from "../../../../shared/services/validify-form/val
 })
 export class ProfilPasswordComponent implements OnInit {
   @Input() user!: User;
+
   passwordForm: FormGroup = this.fb.group({
     oldpassword:["", Validators.required],
     confirmNewPassword:["", Validators.required],
     newPassword: ["", [Validators.required, Validators.minLength(2), this.validator.createPasswordsStrengthValidator()]]
   }, {validators:this.validator.passwordMatchValidator("newPassword", "confirmNewPassword")});
-  constructor(private fb : FormBuilder,private validator: ValidityFormService) { }
+
+
+
+  constructor(private fb : FormBuilder,private validator: ValidityFormService, private userService: UserService, private router: Router,  private dialog: MatDialog, private snackBar:MatSnackBar) { }
+
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-      //todo update user mot de passe
+
+    if(this.passwordForm.valid){
+        const oldPassword = this.passwordForm.get("oldpassword")!.value
+        const newPassword = this.passwordForm.get("newPassword")!.value
+
+      this.userService.updateUserPassword(this.user.userId, oldPassword, newPassword).subscribe(()=>{
+        this.snackBar.open("Changes up to date", '', {
+          duration:5000,
+          verticalPosition:'top',
+          panelClass: ['green-snackbar'],
+        })
+          this.dialog.closeAll();
+      }, ()=>{
+        this.snackBar.open("Invalid Current Password", 'Try again!', {
+          duration:5000,
+          verticalPosition:'top',
+          panelClass: ['red-snackbar','login-snackbar'],
+        })
+      })
+    }
   }
 
   get passWordHasErrorMessage(): string {
