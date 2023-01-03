@@ -1,7 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../shared/models/User.model";
-import {Observable} from "rxjs";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {catchError, EMPTY, Observable, switchMap} from "rxjs";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserService} from "../../../../shared/services/user-service/user.service";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {AuthService} from "../../../../shared/services/auth-service/auth.service";
 
 @Component({
   selector: 'app-profil-update',
@@ -15,13 +19,13 @@ export class ProfilUpdateComponent implements OnInit {
   url: any;
   profilForm!: FormGroup;
   selectedFile: HTMLInputElement | undefined;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService,private dialog: MatDialog, private snackBar:MatSnackBar, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.profilForm = this.formBuilder.group({
-      firstname: [''],
-      lastname: [''],
-      city:['']
+      firstname: [this.user.userFirstname, Validators.required],
+      lastname: [this.user.userName, Validators.required],
+      city:[this.user.userCity, Validators.required]
     });
   }
 
@@ -35,7 +39,29 @@ export class ProfilUpdateComponent implements OnInit {
   }
 
   saveProfil() {
-      //todo update user
+    if(this.profilForm.valid){
+      const firstname = this.profilForm.get("firstname")!.value
+      const lastname = this.profilForm.get("lastname")!.value
+      const city = this.profilForm.get("city")!.value
+
+      this.userService.updateUser(this.user.userId, lastname, firstname, city, null).pipe(
+        switchMap(() =>   this.userService.getUserById(this.user.userId)),
+        catchError(() => {
+          this.snackBar.open("Impossible", 'Try again!', {
+            duration:5000,
+            verticalPosition:'top',
+            panelClass: ['red-snackbar','login-snackbar'],
+          })
+          return EMPTY
+        })).subscribe(()=>{
+        this.snackBar.open("Changes up to date", '', {
+          duration:5000,
+          verticalPosition:'top',
+          panelClass: ['green-snackbar'],
+        })
+        this.dialog.closeAll();
+      })
+    }
   }
 
 }

@@ -72,7 +72,7 @@ export class GetStartedComponent implements OnInit {
       if(this.updateForm.valid){
         this.planningService.create(titlePlanning, descriptionPlanning, date, this.user.userId).subscribe()
 
-        this.userService.updateUser(this.user.userId, this.user.username, this.user.userFirstname, city, picture).pipe(
+        this.userService.updateUser(this.user.userId, this.user.userName, this.user.userFirstname, city, picture).pipe(
           switchMap(() =>   this.userService.getUserById(this.user.userId)),
           catchError((err) =>{
             return EMPTY

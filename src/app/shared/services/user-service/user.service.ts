@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth-service/auth.service";
 import {User} from "../../models/User.model";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +42,11 @@ export class UserService {
     return this.http.put<any>("http://localhost:8080/api/users/password/" + userId, credential)
   }
 
+  deleteUser(userId: string){
+    return this.http.delete<any>("http://localhost:8080/api/users/delete/" + userId)
+  }
+
+
 
   getPlanningWithInteraction(userId: any){
     return this.http.get<any>("http://localhost:8080/api/interact/user/" + userId)
@@ -49,5 +55,7 @@ export class UserService {
   getIfUserHaveInteraction(userId: any, planningId: any){
     return this.http.get<any>("http://localhost:8080/api/interact/planning/" + userId + '/' + planningId)
   }
+
+
 
 }

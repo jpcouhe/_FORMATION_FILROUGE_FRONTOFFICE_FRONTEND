@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../../auth/container/signup/signup.component";
 import {ProfilComponent} from "../../features/profil/profil.component";
@@ -12,14 +12,20 @@ import {Router} from "@angular/router";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
   user!: any;
   displaySharedCalender: boolean = false;
   planningWithInteraction!: any
   constructor(private dialog : MatDialog, private authService: AuthService, private userService: UserService, private route: Router) { }
 
   ngOnInit(): void {
-    this.user = this.authService.auth$.getValue()
+    //todo pas de subscribe comme ca enchaine
+    this.authService.auth$.subscribe((data) => {
+      this.user = data
+    })
+
+
+
     this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
       this.planningWithInteraction = data
       if(this.planningWithInteraction.length == 0){
@@ -29,6 +35,8 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
+
+
 
   displayProfil() {
     const dialogConfig = new MatDialogConfig();
@@ -45,5 +53,9 @@ export class HeaderComponent implements OnInit {
 
   goToSharedCalendar(planningId: any) {
       this.route.navigateByUrl("accueil/calendar/" + planningId)
+  }
+
+  ngOnChanges(): void {
+    this.user = this.authService.auth$.getValue()
   }
 }
