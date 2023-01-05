@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CalendarOptions, DateSelectArg, EventAddArg, EventApi, EventClickArg} from "@fullcalendar/core";
 
 import interactionPlugin from '@fullcalendar/interaction';
@@ -65,20 +65,44 @@ export class CalendarComponent implements OnInit{
   user!: any
   isShareCalendar:boolean = false
   shareCalendar: any;
-
+  isParam!:any
   constructor( private route: ActivatedRoute, private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private router: Router, private eventService: EventService, private userService: UserService, private authService: AuthService, private planningService: PlanningService, private snackBar:MatSnackBar) {
   }
 
   ngOnInit(): void {
-
-
     this.user = this.authService.auth$.getValue()
+   /* this.route.params.pipe(
+      tap((params) => {
+        this.isParam = params
+        console.log(this.isParam)
+      }),
+      switchMap(async (isParam) => {
+        if(this.isParam !== null){
+          console.log("salut")
+         this.planningService.getPlanningById(this.isParam.id).subscribe((data) => {
+            this.isShareCalendar = true;
+            this.shareCalendar = data;
+            this.events1 = data.eventsByPlanningId;
+            this.event$.next(data.eventsByPlanningId);
+            this.planningService.planningView$.next(data);
+            console.log(this.user.userId)
+          })
+      }else {
+          console.log("passalut")
+          this.planningService.getPlanning(this.user.userId).subscribe((data) => {
+            this.isShareCalendar = false;
+            this.events1 = data.eventsByPlanningId;
+            this.event$.next(data.eventsByPlanningId);
+          })
+        }})).subscribe()*/
+
     if(this.route.snapshot.params['id'] !== undefined){
       this.planningService.getPlanningById(this.route.snapshot.params['id']).subscribe((data)=>{
         this.isShareCalendar = true
         this.shareCalendar = data
         this.events1 = data.eventsByPlanningId
         this.event$.next(data.eventsByPlanningId)
+        this.planningService.planningView$.next(data)
       })
     }else{
       this.planningService.getPlanning(this.user.userId).subscribe((data)=>{
@@ -88,6 +112,7 @@ export class CalendarComponent implements OnInit{
       })
     }
   }
+
 
 
   handleEventClick(clickInfo: EventClickArg) {

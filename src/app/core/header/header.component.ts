@@ -1,30 +1,37 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../../auth/container/signup/signup.component";
 import {ProfilComponent} from "../../features/profil/profil.component";
 import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {User} from "../../shared/models/User.model";
 import {UserService} from "../../shared/services/user-service/user.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PlanningService} from "../../shared/services/planning-service/planning.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit, OnChanges{
   user!: any;
   displaySharedCalender: boolean = false;
   planningWithInteraction!: any
-  constructor(private dialog : MatDialog, private authService: AuthService, private userService: UserService, private route: Router) { }
+  planning!: any
+  sub!:any
+  id!:any
+
+  constructor(private dialog : MatDialog, private authService: AuthService, private userService: UserService, private route: Router, private router: ActivatedRoute, private planningService: PlanningService) { }
 
   ngOnInit(): void {
-    //todo pas de subscribe comme ca enchaine
     this.authService.auth$.subscribe((data) => {
       this.user = data
     })
 
-
+    this.planningService.planningView$.subscribe((planning) => {
+      this.planning = planning
+      console.log(this.planning)
+    })
 
     this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
       this.planningWithInteraction = data
@@ -57,5 +64,9 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.user = this.authService.auth$.getValue()
-  }
+    this.planningService.planningView$.getValue()
+    console.log(this.planningService.planningView$.getValue())
+    };
+
+
 }

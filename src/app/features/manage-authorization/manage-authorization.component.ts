@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {PlanningService} from "../../shared/services/planning-service/planning.service";
+import * as events from "events";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {SignupComponent} from "../../auth/container/signup/signup.component";
+import {
+  UsersCalendarAuthorizationComponent
+} from "../users-list/users-calendar-authorization/users-calendar-authorization.component";
 
 @Component({
   selector: 'app-manage-authorization',
@@ -12,7 +18,7 @@ export class ManageAuthorizationComponent implements OnInit {
   user!: any;
   planningCredentials!:any;
   planningCredentialsEmpty:boolean = true;
-  constructor(private authService: AuthService, private planningService: PlanningService) { }
+  constructor(private authService: AuthService, private planningService: PlanningService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -20,7 +26,6 @@ export class ManageAuthorizationComponent implements OnInit {
 
    this.authService.auth$.subscribe((data)=>{
      this.user = data;
-     console.log(data)
    })
 
     this.planningService.getShareUsersByPlanning(this.user.planningsByUserId[0].planningId).subscribe((data)=>{
@@ -31,13 +36,20 @@ export class ManageAuthorizationComponent implements OnInit {
       }else{
         this.planningCredentialsEmpty = false;
       }
-      console.log(this.planningCredentials)
-      console.log(this.planningCredentials.length)
     })
 
   }
 
-  displayModal(userId: any) {
-    
+  displayModal(userId:any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "80%";
+    dialogConfig.data = {
+      userId,
+      planningId: this.user.planningsByUserId[0].planningId
+    }
+    this.dialog.open(UsersCalendarAuthorizationComponent, dialogConfig)
   }
 }

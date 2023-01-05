@@ -1,18 +1,13 @@
-<p>manage-authorization works!</p>
-<p *ngIf="planningCredentialsEmpty">Aucun partage en cours</p>
-<div *ngIf="!planningCredentialsEmpty">
-    <div *ngFor="let credential of planningCredentials" >
-        <p>{{credential.usersByUserId.userName}} {{credential.usersByUserId.userFirstname}}</p>
-       <!-- <span>{{credential.permissionsByPermissionId.permissionName}}</span>-->
-    </div>
-</div>
+<h1>Liste des utilisateurs qui peuvent intéragir avec votre calendrier</h1>
+<p *ngIf="planningCredentialsEmpty">Aucun partage en cours...</p>
 
-
-<section>
-  <mat-card (click)="displayModal(user.userId)" class="user-card p-10 d-flex" *ngFor="let credential of planningCredentials">
+<section *ngIf="!planningCredentialsEmpty">
+  <mat-card (click)="displayModal(credential.usersByUserId.userId)" class="user-card p-10 d-flex" *ngFor="let credential of planningCredentials">
     <mat-card-header class="d-flex">
+      <span ></span>
       <img mat-card-avatar src="http://localhost:8080/files/{{credential.usersByUserId.userPicture}}">
       <mat-card-title class="user-card__header__text">{{credential.usersByUserId.userName | titlecase}} {{credential.usersByUserId.userFirstname | titlecase}}</mat-card-title>
+      <mat-card-subtitle class="user-card__header__subtitle">{{credential.usersByUserId.userEmail}}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 </section>

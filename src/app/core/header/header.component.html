@@ -8,7 +8,7 @@
         </a>
         <div class="d-flex flex-align-items-center display-calendar">
             <mat-icon class="icon ml-20">calendar_month</mat-icon>
-            <span class="ml-10 display-calendar__name">{{user.planningsByUserId[0].planningTitle}}</span>
+          <a [routerLink]="'/accueil/calendar'"><span class="ml-10 display-calendar__name">{{user.planningsByUserId[0].planningTitle}}</span></a>
           <button *ngIf="displaySharedCalender" mat-button class="d-flex ">
             <mat-icon class="icon ml-20" [matMenuTriggerFor]="menuCalendar">expand_more</mat-icon>
           </button>
