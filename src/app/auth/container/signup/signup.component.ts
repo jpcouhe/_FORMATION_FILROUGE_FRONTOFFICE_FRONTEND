@@ -5,6 +5,7 @@ import {catchError, EMPTY, switchMap, tap} from "rxjs";
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
   errorMsg!: string;
 
 
-  constructor(private formBuilder: FormBuilder, private validator: ValidityFormService, private authService: AuthService, private router:Router, private dialog: MatDialog,) { }
+  constructor(private formBuilder: FormBuilder, private snackBar:MatSnackBar, private validator: ValidityFormService, private authService: AuthService, private router:Router, private dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -58,12 +59,15 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if(this.signupForm.valid){
+
       const city = null;
       const picture = null;
       const firstname =  this.signupForm.get("firstname")!.value;
       const name =  this.signupForm.get("name")!.value;
       const email =  this.signupForm.get("emailSignup")!.value;
       const password =  this.signupForm.get("passwordSignup")!.value;
+
+
       this.authService.signup(name, firstname, password, email, picture, city).pipe(
         switchMap(()=> this.authService.login(email, password)),
         tap(()=>{
@@ -71,6 +75,11 @@ export class SignupComponent implements OnInit {
           this.closeTab()
         }),
         catchError((error) => {
+          this.snackBar.open("Email already exist", 'Try again!', {
+            duration:5000,
+            verticalPosition:'top',
+            panelClass: ['red-snackbar','login-snackbar'],
+          })
           this.errorMsg = error.message;
           return EMPTY;
         })

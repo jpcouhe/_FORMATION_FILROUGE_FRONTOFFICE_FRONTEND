@@ -9,6 +9,7 @@ import {
 } from "./users-calendar-authorization/users-calendar-authorization.component";
 import {UserService} from "../../shared/services/user-service/user.service";
 import {Observable, Subscription} from "rxjs";
+import {User} from "../../shared/models/User.model";
 
 @Component({
   selector: 'app-users-list',
@@ -19,7 +20,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   filteredString: string = "";
   //todo filter avec userId
   private user: any;
-  users!: [];
+  users!: User[];
   userList$! :Observable<any>;
   subscription!: Subscription
 
@@ -27,10 +28,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.authService.auth$.getValue();
-    /*this.userList$ = this.userService.getAllUsers(this.user.userId);*/
     this.subscription = this.userService.getAllUsers(this.user.userId).subscribe((data)=>{
         this.users = data
-      console.log(this.users)
     })
 
   }

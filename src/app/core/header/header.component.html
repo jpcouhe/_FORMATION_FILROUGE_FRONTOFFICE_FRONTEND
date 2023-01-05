@@ -24,7 +24,7 @@
         <div class="right-nav__logo d-flex flex-align-items-center">
             <a [routerLink]="['/accueil/users']" class=""><mat-icon class="icon mr-40 ">groups</mat-icon></a>
           <div class="right-nav__container__avatar">
-            <img class="right-nav__avatar" src="/assets/images/lion.jpg" alt="">
+            <img class="right-nav__avatar" src="http://localhost:8080/files/{{user.userPicture}}" alt="">
           </div>
           <span class="ml-10 right-nav__name">{{user.userName}} {{user.userFirstname}}</span>
           <button mat-button class="d-flex ">

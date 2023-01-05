@@ -12,13 +12,28 @@ export class UserService {
   user$ = new BehaviorSubject<any>([]);
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  updateUser(userId: string, userName: string, userFirstname: string, userCity: string, UserPicture: null) {
+  updateUser(userId: string, userName: string, userFirstname: string, userCity: string, userPicture: string |HTMLInputElement) {
+
     const formData = new FormData();
-    const user = {userFirstname, userName, UserPicture, userCity }
-    formData.append("user", JSON.stringify(user))
-    // todo : prise en charge des images
-    // formData.append("image", image)
-    return this.http.put<{message: string}>("http://localhost:8080/api/users/" + userId, user)
+
+    if (typeof userPicture == "string"){
+      formData.append("userFirstname", userFirstname)
+      formData.append("userName", userName)
+      formData.append("city", userCity )
+      formData.append("picture", userPicture)
+
+    }else{
+
+      formData.append("userFirstname", userFirstname)
+      formData.append("userName", userName)
+      formData.append("city", userCity )
+      // @ts-ignore
+      formData.append("file", userPicture)
+      formData.append("picture", "")
+    }
+
+
+    return this.http.put<{message: string}>("http://localhost:8080/api/users/" + userId, formData)
   }
 
   getUserById(userId:string){

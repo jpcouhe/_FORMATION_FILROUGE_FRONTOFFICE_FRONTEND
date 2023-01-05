@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
-import {catchError, EMPTY, forkJoin, mergeMap, mergeWith, switchAll, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, forkJoin, mergeMap, mergeWith, Subscription, switchAll, switchMap, tap} from "rxjs";
 import {User} from "../../../shared/models/User.model";
 import {UserService} from "../../../shared/services/user-service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {PlanningService} from "../../../shared/services/planning-service/planning.service";
+import {GoogleMapsService} from "../../../shared/services/google-maps-service/google-maps.service";
 
 @Component({
   selector: 'app-get-started',
@@ -13,7 +14,8 @@ import {PlanningService} from "../../../shared/services/planning-service/plannin
   styleUrls: ['./get-started.component.scss']
 })
 export class GetStartedComponent implements OnInit {
-
+  @ViewChild('addressText') addressText!: ElementRef;
+  protected placeSubscription!: Subscription;
   user!: User;
   url!: string;
   popup: boolean = false;
@@ -21,10 +23,10 @@ export class GetStartedComponent implements OnInit {
   updateForm!: FormGroup;
   calendarForm!: FormGroup;
 
-  constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router, private planningService: PlanningService) { }
+  constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, private router: Router, private planningService: PlanningService,private googleMapService: GoogleMapsService) { }
 
   ngOnInit(): void {
-      //todo requete pour creer un calendrier avec description
+
 
       this.authService.auth$.pipe(
         tap((user) => {
@@ -37,6 +39,10 @@ export class GetStartedComponent implements OnInit {
         title:['', Validators.required],
         description:['', Validators.required]
       })
+  }
+
+  ngAfterViewInit(): void {
+    this.googleMapService.getPlaceAutocomplete(this.addressText);
   }
 
   onselectFile($event: any) {
@@ -60,19 +66,25 @@ export class GetStartedComponent implements OnInit {
 
   onSubmit() {
       let imgProfil;
-      this.selectedFile ? (imgProfil = this.selectedFile) : (imgProfil = this.url)
-      //todo gerer les images
-      const city = this.updateForm.get("city")!.value;
+
+
+      this.selectedFile ? (imgProfil = this.selectedFile) : (imgProfil = this.url.slice(28))
+
+      let city;
+      if(this.addressText.nativeElement.value){
+         city = this.addressText.nativeElement.value;
+      }else{
+         city = this.updateForm.get("city")!.value;
+      }
       const titlePlanning = this.updateForm.get('title')!.value;
       const descriptionPlanning = this.updateForm.get('description')!.value;
       const date = new Date()
 
 
-      const picture = null;
+      const picture = this.url;
       if(this.updateForm.valid){
         this.planningService.create(titlePlanning, descriptionPlanning, date, this.user.userId).subscribe()
-
-        this.userService.updateUser(this.user.userId, this.user.userName, this.user.userFirstname, city, picture).pipe(
+        this.userService.updateUser(this.user.userId, this.user.userName, this.user.userFirstname, city, imgProfil).pipe(
           switchMap(() =>   this.userService.getUserById(this.user.userId)),
           catchError((err) =>{
             return EMPTY
@@ -81,10 +93,14 @@ export class GetStartedComponent implements OnInit {
           this.router.navigate(['/accueil/calendar'])
         })
       }
-
-      //todo requete pour creer un calendrier avec description
-
-
-
   }
+
+  /*onAddressChange(value: string) {
+    console.log(value)
+    this.placeSubscription =
+      this.googleMapService.placeObservable.subscribe(
+        (place) => { console.log('nouvelle adresse : ' +
+          place.formatted_address); }
+      );
+  }*/
 }

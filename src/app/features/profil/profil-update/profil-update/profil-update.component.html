@@ -37,7 +37,7 @@
       name="lastname"
     />
   </mat-form-field>
-  <mat-form-field class="d-flex flex-column secondInput" appearance="outline">
+  <mat-form-field class="d-flex flex-column secondInput" appearance="outline" >
     <mat-label   for="city">Ville</mat-label>
     <input
       matInput
@@ -47,6 +47,7 @@
       placeholder="Ville"
       formControlName="city"
       name="city"
+      #addressText
     />
   </mat-form-field>
   <button mat-raised-button color="accent" class="btn-update" (click)="saveProfil()">Enregistrer</button>

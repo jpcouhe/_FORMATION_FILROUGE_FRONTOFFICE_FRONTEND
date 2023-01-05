@@ -22,7 +22,13 @@
             <img
               (click)="setFiles($event)"
               class="block-right__popup__image"
-              src="/assets/images/lion.jpg"
+              src="http://localhost:8080/files/default1.png"
+              alt="nobodyFace"
+            />
+            <img
+              (click)="setFiles($event)"
+              class="block-right__popup__image"
+              src="http://localhost:8080/files/default2.png"
               alt="lion"
             />
           </div>
@@ -35,7 +41,7 @@
           <h2 class="mb-50">Ajoutez votre ville</h2>
             <mat-form-field floatLabel="never" class="form-input" >
               <mat-label>City</mat-label>
-              <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city" >
+              <input type="text" matInput placeholder="Orléans" data-cy-city name="city" formControlName="city" #addressText>
               <mat-error>Afin de bénéficier de la météo personnalisée, il est indispensable de renseigner une localisation</mat-error>
             </mat-form-field>
 
@@ -45,7 +51,7 @@
             <input type="text" matInput data-cy-city name="title" formControlName="title" >
             <mat-error>Titre requis</mat-error>
           </mat-form-field>
-          
+
           <h2 class="mb-50">Description du calendrier</h2>
           <mat-form-field floatLabel="never" appearance="outline" class="form-input">
             <mat-label>Description</mat-label>
