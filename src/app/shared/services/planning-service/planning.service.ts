@@ -31,4 +31,8 @@ export class PlanningService {
     this.http.post<any>("http://localhost:8080/api/interact", interactData).subscribe();
   }
 
+  getShareUsersByPlanning(planningId:number){
+    return this.http.get<any>("http://localhost:8080/api/interact/planning/" + planningId)
+  }
+
 }

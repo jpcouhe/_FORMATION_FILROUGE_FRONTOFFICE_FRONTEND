@@ -135,9 +135,9 @@ export class CalendarComponent implements OnInit{
 
   }
 
-  private redirect() {
-      this.router.navigateByUrl("accueil/calendar/authorization")
-  }
+/*  redirect() {
+      this.router.navigateByUrl("calendar/authorization")
+  }*/
 
 
   displayErrorMessage(){

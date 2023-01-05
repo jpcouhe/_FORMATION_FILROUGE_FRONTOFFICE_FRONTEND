@@ -13,7 +13,7 @@
         <h1>{{shareCalendar.planningTitle}}</h1>
         <p>{{shareCalendar.planningDescription}}</p>
       </div>
-      <a *ngIf="!isShareCalendar" class="btn-shared" href="#"><button mat-raised-button color="accent" ><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
+      <a *ngIf="!isShareCalendar" class="btn-shared" [routerLink]="['/accueil/calendar/authorization']"><button mat-raised-button color="accent"><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
     </div>
       <div class="container-calendar">
         <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" ></full-calendar>

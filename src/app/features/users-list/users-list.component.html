@@ -13,7 +13,7 @@
 </section>
 
 <section>
-  <mat-card (click)="displayModal(user.userId)" class="user-card p-10 d-flex" *ngFor="let user of users | filter:filteredString">
+  <mat-card (click)="displayModal(user.userId)" class="user-card p-10 d-flex" *ngFor="let user of users | filter:filteredString ">
     <mat-card-header class="d-flex">
       <img mat-card-avatar src="http://localhost:8080/files/{{user.userPicture}}">
       <mat-card-title class="user-card__header__text">{{ user.userFirstname | titlecase }} {{ user.userName | titlecase }}</mat-card-title>

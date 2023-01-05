@@ -34,8 +34,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   }
 
-  displayModal(userId: any) {
 
+  displayModal(userId: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
