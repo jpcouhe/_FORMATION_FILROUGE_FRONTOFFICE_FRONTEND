@@ -71,32 +71,35 @@ export class CalendarComponent implements OnInit{
 
   ngOnInit(): void {
     this.user = this.authService.auth$.getValue()
-   /* this.route.params.pipe(
+    this.route.params.pipe(
       tap((params) => {
         this.isParam = params
         console.log(this.isParam)
       }),
       switchMap(async (isParam) => {
-        if(this.isParam !== null){
+        if(Object.keys(this.isParam).length === 0 && this.isParam.constructor === Object){
+          console.log(this.isParam)
           console.log("salut")
-         this.planningService.getPlanningById(this.isParam.id).subscribe((data) => {
-            this.isShareCalendar = true;
-            this.shareCalendar = data;
-            this.events1 = data.eventsByPlanningId;
-            this.event$.next(data.eventsByPlanningId);
-            this.planningService.planningView$.next(data);
-            console.log(this.user.userId)
-          })
-      }else {
-          console.log("passalut")
           this.planningService.getPlanning(this.user.userId).subscribe((data) => {
             this.isShareCalendar = false;
             this.events1 = data.eventsByPlanningId;
             this.event$.next(data.eventsByPlanningId);
           })
-        }})).subscribe()*/
 
-    if(this.route.snapshot.params['id'] !== undefined){
+      }else {
+          console.log("passalut")
+          console.log(this.isParam)
+          this.planningService.getPlanningById(this.isParam.id).subscribe((data) => {
+            this.isShareCalendar = true;
+            this.shareCalendar = data;
+            this.events1 = data.eventsByPlanningId;
+            this.event$.next(data.eventsByPlanningId);
+            this.planningService.planningView$.next(data);
+
+          })
+        }})).subscribe()
+
+   /* if(this.route.snapshot.params['id'] !== undefined){
       this.planningService.getPlanningById(this.route.snapshot.params['id']).subscribe((data)=>{
         this.isShareCalendar = true
         this.shareCalendar = data
@@ -110,7 +113,7 @@ export class CalendarComponent implements OnInit{
         this.events1 = data.eventsByPlanningId
         this.event$.next(data.eventsByPlanningId)
       })
-    }
+    }*/
   }
 
 
