@@ -1,17 +1,21 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
-import {CalendarOptions, DateSelectArg, EventAddArg, EventApi, EventClickArg} from "@fullcalendar/core";
+import {ChangeDetectorRef, Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {
+  CalendarOptions,
+  EventApi,
+  EventClickArg,
+  EventHoveringArg
+} from "@fullcalendar/core";
 
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from "@fullcalendar/timegrid"
 import listPlugin from '@fullcalendar/list';
 
-import {createEventId, INITIAL_EVENTS} from "../../shared/Utils/event-utils";
+
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {FormEventComponent} from "./form-event/form-event.component";
-import {BehaviorSubject, EMPTY, map, Observable, of, switchAll, switchMap, tap} from "rxjs";
+import {BehaviorSubject, EMPTY, map,switchMap, tap} from "rxjs";
 import {EditEventComponent} from "./edit-event/edit-event.component";
-import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../shared/services/event-service/event.service";
 import {UserService} from "../../shared/services/user-service/user.service";
@@ -19,7 +23,8 @@ import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {PlanningService} from "../../shared/services/planning-service/planning.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import frLocale from '@Fullcalendar/core/locales/fr'
-import {d} from "@fullcalendar/core/internal-common";
+import Tooltip from 'tooltip.js'
+
 
 @Component({
   selector: 'app-calendar',
@@ -28,8 +33,6 @@ import {d} from "@fullcalendar/core/internal-common";
 })
 export class CalendarComponent implements OnInit{
 
-  /*events1: {}[] = [];
-*/
   calendarOptions: CalendarOptions = {
     locale: frLocale,
     timeZone: 'UTC',
@@ -60,12 +63,15 @@ export class CalendarComponent implements OnInit{
     eventClick: this.handleEventClick.bind(this),
     eventDrop: this.handleEvents.bind(this),
     eventResize:this.handleEvents.bind(this),
+    eventMouseEnter: (info) => this.displayTippy(info)
+    ,
     eventColor: '#2C3E50',
     eventTimeFormat: { // like '14:30:00'
       hour: '2-digit',
       minute: '2-digit',
       meridiem: false
     },
+
 
   };
 
@@ -78,6 +84,7 @@ export class CalendarComponent implements OnInit{
   shareCalendar: any;
   isParam!:any
   errorMessage!: boolean;
+  tooltip!: any;
   constructor( private route: ActivatedRoute, private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private router: Router, private eventService: EventService, private userService: UserService, private authService: AuthService, private planningService: PlanningService, private snackBar:MatSnackBar) {
   }
 
@@ -92,6 +99,7 @@ export class CalendarComponent implements OnInit{
           this.planningService.getPlanning(this.user.userId).subscribe((data) => {
             this.isShareCalendar = false;
             this.event$.next(data.eventsByPlanningId);
+            console.log(data.eventsByPlanningId)
           })
 
       }else {
@@ -100,6 +108,7 @@ export class CalendarComponent implements OnInit{
             this.shareCalendar = data;
             this.event$.next(data.eventsByPlanningId);
             this.planningService.planningView$.next(data);
+            console.log(data)
           })
         }}),
       switchMap(()=>{
@@ -122,6 +131,12 @@ export class CalendarComponent implements OnInit{
 
   }
 
+  displayTippy(info: EventHoveringArg) {
+    this.tooltip = new Tooltip(info.el, {
+      title: info.event.extendedProps['description'],
+      placement:'top'
+    })
+  }
 
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -144,14 +159,8 @@ export class CalendarComponent implements OnInit{
   }
 
   handleEvents(events: any) {
-    debugger
-    const eventStart = events.event.end
-    console.log(events.event.id)
-    console.log(events.event.start)
-    console.log(events.event.end)
-    console.log(events.event.title)
 
-    this.eventService.updateEvent(events.event.id,events.event.title,events.event.start,events.event.end).subscribe((data) =>{
+    this.eventService.updateEvent(events.event.id,events.event.title,events.event.start,events.event.end, events.event.extendedProps.description).subscribe((data) =>{
       const eventList = this.event$.getValue();
       const newList = eventList.filter((e:any) => e.id != events.event.id)
       newList.push(data)
@@ -200,7 +209,7 @@ export class CalendarComponent implements OnInit{
     if(this.route.snapshot.params['id'] !== undefined){
       ref.afterClosed().subscribe((data:any) => {
         if(data) {
-          this.eventService.addEvent(data.title, data.start, data.end,this.route.snapshot.params['id'] ).subscribe((newEvent) => {
+          this.eventService.addEvent(data.title, data.start, data.end, data.description,this.route.snapshot.params['id'] ).subscribe((newEvent) => {
             const eventList = this.event$.getValue();
             const newList = [...eventList, newEvent]
             this.changeDetector.detectChanges()
@@ -211,7 +220,7 @@ export class CalendarComponent implements OnInit{
     }else{
       ref.afterClosed().subscribe((data:any) => {
         if(data) {
-          this.eventService.addEvent(data.title, data.start, data.end, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
+          this.eventService.addEvent(data.title, data.start, data.end,data.description, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
             const eventList = this.event$.getValue();
             const newList = [...eventList, newEvent]
             this.changeDetector.detectChanges()

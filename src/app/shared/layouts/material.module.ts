@@ -9,6 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 const MODULES = [
   CommonModule,
@@ -20,7 +21,8 @@ const MODULES = [
   MatIconModule,
   MatCardModule,
   MatTabsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTooltipModule
 ]
 
 @NgModule({
