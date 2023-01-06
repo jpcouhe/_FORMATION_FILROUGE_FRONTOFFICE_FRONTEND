@@ -3,14 +3,17 @@
   <mat-form-field floatLabel="never" appearance="outline">
     <mat-label>Titre</mat-label>
     <input type="text" matInput formControlName="title">
+    <mat-error>Champs requis</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Début</mat-label>
     <input type="datetime-local" matInput formControlName="start">
+    <mat-error>Champs requis</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Fin</mat-label>
     <input type="datetime-local" matInput formControlName="end">
+    <mat-error *ngIf="dateRangeError" >{{dateRangeError}}</mat-error>
   </mat-form-field>
-  <button mat-raised-button color="primary">Ajouter</button>
+  <button [disabled]="eventForm.invalid || eventForm.untouched" mat-raised-button color="primary">Ajouter</button>
 </form>

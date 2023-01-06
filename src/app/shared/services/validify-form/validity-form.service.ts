@@ -85,4 +85,29 @@ export class ValidityFormService {
     };
   }
 
+
+  DateRangeValidator(startDate: string, endDate: string) {
+    return (formGroup: FormGroup) => {
+      const startDateControl = formGroup.controls[startDate];
+      const endDateControl = formGroup.controls[endDate];
+
+      if (!startDateControl || !endDateControl) {
+        return null;
+      }
+
+      // @ts-ignore
+      if (startDateControl.errors && !endDateControl.errors["dateRange"]) {
+        return null;
+      }
+
+      if (Date.parse(startDateControl.value) > Date.parse(endDateControl.value)) {
+        endDateControl.setErrors({ dateRange: true });
+        return true;
+      } else {
+        endDateControl.setErrors(null);
+        return null;
+      }
+    };
+  }
+
 }

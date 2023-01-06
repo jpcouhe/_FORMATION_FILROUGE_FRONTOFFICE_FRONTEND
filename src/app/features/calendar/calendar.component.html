@@ -9,11 +9,16 @@
         <p>{{user.planningsByUserId[0].planningDescription}}</p>
       </div>
       <div class="calendar-header" *ngIf="isShareCalendar">
-        <span>CALENDRIER PARTAGE</span>
         <h1>{{shareCalendar.planningTitle}}</h1>
         <p>{{shareCalendar.planningDescription}}</p>
+        <span class="shareCalendar">Vous n'étes pas le propriétaire de ce calendrier</span>
+        <span *ngIf="errorMessage" class=permission>Vous ne pouvez pas intéragir avec le calendrier, seul les droits de lecture vous ont été attribué</span>
       </div>
-      <a *ngIf="!isShareCalendar" class="btn-shared" [routerLink]="['/accueil/calendar/authorization']"><button mat-raised-button color="accent"><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
+      <div *ngIf="!isShareCalendar" class="btn-shared">
+        <button mat-raised-button color="primary" *ngIf="!isShareCalendar">Modifier</button>
+        <a  [routerLink]="['/accueil/calendar/authorization']"><button mat-raised-button color="accent"><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
+      </div>
+
     </div>
       <div class="container-calendar">
         <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" ></full-calendar>

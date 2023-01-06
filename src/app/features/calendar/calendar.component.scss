@@ -46,7 +46,7 @@ display: block;
 }
 
 .calendar-header{
-  margin-top:20px;
+/*  margin-top:20px;*/
   margin-left: 30px;
   display: flex;
   justify-content: center;
@@ -75,6 +75,13 @@ display: block;
 .btn-shared{
   margin-left: auto;
 
+  button{
+    margin-right: 20px;
+  }
+
+  a > button{
+    margin-right: 0;
+  }
   @include md{
    display: flex;
     justify-content: center;
@@ -85,4 +92,16 @@ full-calendar {
   @include sm{
     font-size: 70%;
   }
+}
+
+
+.shareCalendar{
+color:#d75e5e
+}
+.permission{
+  margin-top: 10px;
+  background-color: #d75e5e;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
 }

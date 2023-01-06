@@ -85,8 +85,8 @@
   box-shadow: 0 4px 7px rgba(0,0,0,0.375);
   border-radius: 10px;
   margin: 0 auto 20px;
-  /*background-color: #5c7d99;*/
-  background-image: linear-gradient(to right top, #2c3e50, #606979, #9498a3, #c9cad0, #ffffff);
+  background: rgb(67,203,255);
+  background: linear-gradient(60deg, rgba(67,203,255,0.8603816526610644) 9%, rgba(33,144,255,0.40379901960784315) 74%, rgba(255,255,255,1) 90%);
   background-size: cover;
   position: relative;
 }

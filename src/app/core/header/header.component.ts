@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit, OnChanges{
 
     this.planningService.planningView$.subscribe((planning) => {
       this.planning = planning
-      console.log(this.planning)
     })
 
     this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
