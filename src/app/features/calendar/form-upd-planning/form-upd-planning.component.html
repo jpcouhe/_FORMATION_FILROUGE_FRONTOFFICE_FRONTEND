@@ -1,0 +1,16 @@
+<h1>Modifier</h1>
+<form [formGroup]="planningForm" (ngSubmit)="save()">
+  <mat-form-field floatLabel="never" appearance="outline">
+    <mat-label>Titre</mat-label>
+    <input type="text" matInput formControlName="title">
+    <mat-error>Champs requis</mat-error>
+  </mat-form-field>
+  <mat-form-field floatLabel="never" appearance="outline">
+    <mat-label>Description</mat-label>
+    <input type="text" matInput formControlName="description">
+    <mat-error>Champs requis</mat-error>
+  </mat-form-field>
+  <button [disabled]="planningForm.invalid || planningForm.untouched" mat-raised-button color="primary">Modifier</button>
+</form>
+
+
