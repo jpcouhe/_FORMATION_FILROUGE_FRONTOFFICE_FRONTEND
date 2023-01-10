@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiGoogle: "hahahaa"
+  openWeatherApi: "a8d6c44e712048000db043276e5b5b57"
 };
 
 /*

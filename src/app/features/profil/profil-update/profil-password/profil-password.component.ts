@@ -35,7 +35,7 @@ export class ProfilPasswordComponent implements OnInit {
         const oldPassword = this.passwordForm.get("oldpassword")!.value
         const newPassword = this.passwordForm.get("newPassword")!.value
 
-      this.userService.updateUserPassword(this.user.userId, oldPassword, newPassword).subscribe(()=>{
+      this.userService.updateUserPassword(this.user.userId!, oldPassword, newPassword).subscribe(()=>{
         this.snackBar.open("Changes up to date", '', {
           duration:5000,
           verticalPosition:'top',

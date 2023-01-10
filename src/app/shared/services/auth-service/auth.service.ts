@@ -1,36 +1,37 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, catchError, EMPTY, map, Observable, of, ReplaySubject, tap} from "rxjs";
-import {UserService} from "../user-service/user.service";
+import {BehaviorSubject,Observable, tap} from "rxjs";
+
+import {User} from "../../models/User.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  //On garde quand même une valeur en mémoire, mais pas besoin d'une valeur initiale
 
-  public auth$: BehaviorSubject<any> = new BehaviorSubject<any>(null)
 
-  private userId= ''
-  private isLoggedIn = false;
-  private access_token="";
+  public auth$: BehaviorSubject<User | {}> = new BehaviorSubject<User | {}>({})
+
+  private userId:String = '';
+  private isLoggedIn:boolean = false;
+  private access_token: String = '';
   constructor(private http: HttpClient) {
   }
 
-  public login(userEmail: string, userPassword: string): Observable<any> {
+  public login(userEmail: string, userPassword: string): Observable<User> {
     let userCredential={userEmail,userPassword }
-    return this.http.post<any>("http://localhost:8080/api/auth/signin", userCredential)
+    return this.http.post<User>("http://localhost:8080/api/auth/signin", userCredential)
       .pipe(
-        tap((user:any) => {
-          this.userId = user.userId
+        tap((user:User) => {
+          this.userId = user.userId!
           this.isLoggedIn = true;
-          this.access_token = user.token
+          this.access_token = user.token!
           this.auth$.next(user)},
           ),
     )
   }
 
-  public signup(userName: string, userFirstname: string, userPassword: string, userEmail: string, userPicture: null, userCity: null){
+  public signup(userName: string, userFirstname: string, userPassword: string, userEmail: string, userPicture: null, userCity: null): Observable<{ message: string }>{
     return this.http.post<{message: string}>('http://localhost:8080/api/auth/signup', {
       userName,
       userFirstname,
@@ -42,18 +43,18 @@ export class AuthService {
   }
 
   public logout(){
-      this.userId= ''
+      this.userId= '';
       this.isLoggedIn = false;
       this.access_token="";
   }
 
 
 
-  getToken(){
+  getToken():String {
     return this.access_token
   }
 
-  isLogged(){
+  isLogged(): boolean{
     return this.isLoggedIn
   }
 }

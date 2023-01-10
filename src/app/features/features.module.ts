@@ -19,6 +19,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersCalendarAuthorizationComponent } from './users-list/users-calendar-authorization/users-calendar-authorization.component';
 import { ManageAuthorizationComponent } from './manage-authorization/manage-authorization.component';
 import {FilterPipe} from "../shared/pipes/filter.pipe";
+import {FormUpdPlanningComponent} from "./calendar/form-upd-planning/form-upd-planning.component";
 
 
 
@@ -36,6 +37,7 @@ import {FilterPipe} from "../shared/pipes/filter.pipe";
     UsersListComponent,
     UsersCalendarAuthorizationComponent,
     ManageAuthorizationComponent,
+    FormUpdPlanningComponent
   ],
   imports: [
     CommonModule,

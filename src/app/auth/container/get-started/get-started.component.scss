@@ -108,7 +108,20 @@
   }
 }
 
+.charLength-input {
+  position: relative;
 
+  &__number {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--background-darkest);
+  @include lg {
+    display: none;
+  }
+  }
+}
 
 .btn-next {
   display: block;
@@ -124,4 +137,25 @@
 
 .form-input{
   width: 100%;
+}
+
+
+mat-form-field{
+width: 100%;
+}
+
+
+/*
+textarea.custom-padding {
+  padding-right: 10px;
+}
+*/
+
+
+textarea.mat-input-element{
+  padding-right: 20px;
+}
+
+.container-count{
+  position: absolute;
 }

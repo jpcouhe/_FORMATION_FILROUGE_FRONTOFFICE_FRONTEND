@@ -1,11 +1,14 @@
+import {Planning} from "./Planning.model";
+
 export interface User {
-  userId: string;
+  userId?: string;
   userName: string;
   userFirstname: string;
   userEmail:string;
   userPicture:string;
-  isActive: boolean;
-  roldeId: number;
-  token: string;
+  isActive?: boolean;
+  roleId?: number;
+  token?: string;
+  planningsByUserId:Planning[],
   userCity: string;
 }

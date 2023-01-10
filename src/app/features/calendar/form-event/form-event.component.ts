@@ -1,8 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ValidityFormService} from "../../../shared/services/validify-form/validity-form.service";
+import {LoginComponent} from "../../../auth/container/login/login.component";
 
 @Component({
   selector: 'app-form-event',
@@ -11,27 +12,24 @@ import {ValidityFormService} from "../../../shared/services/validify-form/validi
 })
 export class FormEventComponent implements OnInit {
   eventForm!: FormGroup
-
+  @Input() eventId!:any
 
   constructor( private dialogRef: MatDialogRef<FormEventComponent>,@Inject(MAT_DIALOG_DATA)
-  public data: {
-    data:any;
-  }, private fb : FormBuilder, private snackBar:MatSnackBar,  private validator: ValidityFormService) { }
+  public data: any, private fb : FormBuilder, private snackBar:MatSnackBar,  private validator: ValidityFormService) { }
 
   ngOnInit(): void {
-    this.eventForm = this.fb.group({
-      title : ['', Validators.required],
-      description: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['',  Validators.required],
-    },{
-      validator: this.validator.DateRangeValidator("start", "end")
-    })
+      this.eventForm = this.fb.group({
+        title : ['', Validators.required],
+        description: ['', Validators.required],
+        start: ['', Validators.required],
+        end: ['',  Validators.required],
+      },{
+        validator: this.validator.DateRangeValidator("start", "end")
+      })
   }
 
   save() {
     if(this.eventForm.valid){
-
         this.dialogRef.close(this.eventForm.value);
     }
   }

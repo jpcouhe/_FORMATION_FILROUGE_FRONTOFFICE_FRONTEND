@@ -25,7 +25,7 @@ describe("Auth Service", () => {
       })
 
 
-    const request = spectator.expectOne("https://localhost:8080/api/auth/login", HttpMethod.POST)
+    const request = spectator.expectOne("http://localhost:8080/api/auth/signin", HttpMethod.POST)
 
     const status = 404;
     const statusText = 'Internal Server Error';
@@ -45,7 +45,7 @@ describe("Auth Service", () => {
       done()
     })
 
-    const request = spectator.expectOne("https://localhost:8080/api/auth/login", HttpMethod.POST)
+    const request = spectator.expectOne("http://localhost:8080/api/auth/signin", HttpMethod.POST)
 
     request.flush("OK", {
       status:200,

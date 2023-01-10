@@ -9,21 +9,39 @@ nav {
 
   @include sm{
     width: 50px;
+    margin-right: 10px;
   }
 }
 
+
 .icon{
   @include md{
+    margin-left: 0;
     margin-right: 0px;
   }
 }
 
-.display-calendar__name{
-  color:var(--color_text-button)
+.calendar-name{
+  margin-left: 10px;
+  color: white;
+  text-decoration: none;
+ @include sm{
+   max-width: 75px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+}
+
+.icon.icon-calendar{
+  @include sm {
+    display: none;
+  }
 }
 
 .right-nav__name{
-  color:var(--color_text-button)
+  color:var(--color_text-button);
+  cursor: none;
 }
 
 .right-nav__avatar {
@@ -32,7 +50,6 @@ nav {
   border-radius: 50%;
   margin: 0 20px;
   object-fit: cover;
-  cursor: pointer;
 
   @include md{
     display: none;

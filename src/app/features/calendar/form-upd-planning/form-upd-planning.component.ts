@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ValidityFormService} from "../../../shared/services/validify-form/validity-form.service";
+
 
 @Component({
   selector: 'app-form-upd-planning',
@@ -15,7 +14,7 @@ export class FormUpdPlanningComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<FormUpdPlanningComponent>,@Inject(MAT_DIALOG_DATA) public data: {
     data:any;
-  }, private fb : FormBuilder, private snackBar:MatSnackBar,  private validator: ValidityFormService) { }
+  }, private fb : FormBuilder) { }
 
   ngOnInit(): void {
     this.planningForm = this.fb.group({
@@ -24,7 +23,7 @@ export class FormUpdPlanningComponent implements OnInit {
     })
   }
 
-  save() {
+  save():void {
     if(this.planningForm.valid){
       this.dialogRef.close(this.planningForm.value);
     }

@@ -1,12 +1,13 @@
-import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {SignupComponent} from "../../auth/container/signup/signup.component";
 import {ProfilComponent} from "../../features/profil/profil.component";
 import {AuthService} from "../../shared/services/auth-service/auth.service";
 import {User} from "../../shared/models/User.model";
 import {UserService} from "../../shared/services/user-service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PlanningService} from "../../shared/services/planning-service/planning.service";
+
+import {Interaction} from "../../shared/models/Interaction.model";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -14,34 +15,24 @@ import {PlanningService} from "../../shared/services/planning-service/planning.s
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnChanges{
-  user!: any;
+  user!: User;
   displaySharedCalender: boolean = false;
-  planningWithInteraction!: any
-  planning!: any
-  sub!:any
-  id!:any
+  planningWithInteraction!: Interaction[]
+  isParam!:any
 
-  constructor(private dialog : MatDialog, private authService: AuthService, private userService: UserService, private route: Router, private router: ActivatedRoute, private planningService: PlanningService) { }
+  constructor(private router: ActivatedRoute, private dialog : MatDialog, private authService: AuthService, private userService: UserService, private route: Router) { }
 
   ngOnInit(): void {
     this.authService.auth$.subscribe((data) => {
-      this.user = data
-    })
-
-    this.planningService.planningView$.subscribe((planning) => {
-      this.planning = planning
-    })
-
-    this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
-      this.planningWithInteraction = data
-      if(this.planningWithInteraction.length == 0){
-        this.displaySharedCalender = false
-      }else{
-        this.displaySharedCalender = true
+      if(Object.entries(data).length !=0){
+        this.user = data as User;
       }
     })
+    this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
+      this.planningWithInteraction = data
+      this.displaySharedCalender = this.planningWithInteraction.length != 0;
+    })
   }
-
 
 
   displayProfil() {
@@ -54,17 +45,22 @@ export class HeaderComponent implements OnInit, OnChanges{
 
   logout() {
     this.authService.logout()
-    this.route.navigateByUrl("/")
+    this.route.navigateByUrl("/").then()
   }
 
   goToSharedCalendar(planningId: any) {
-      this.route.navigateByUrl("accueil/calendar/" + planningId)
+      this.route.navigateByUrl("accueil/calendar/" + planningId).then()
   }
 
   ngOnChanges(): void {
-    this.user = this.authService.auth$.getValue()
-    this.planningService.planningView$.getValue()
-    console.log(this.planningService.planningView$.getValue())
+    this.authService.auth$
+      .pipe(
+        tap((data)=>{
+          if(Object.entries(data).length !=0){
+            this.user = data as User;
+          }
+        })
+      ).subscribe()
     };
 
 

@@ -9,17 +9,18 @@ import {User} from "../../shared/models/User.model";
   styleUrls: ['./profil.component.scss']
 })
 export class ProfilComponent implements OnInit, OnDestroy {
-  private subscription!: Subscription;
+  subscription!: Subscription;
   user!: User
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
      this.subscription= this.authService.auth$.pipe(
-       tap((user)=>{
-          this.user = user;
-       })
-     ).subscribe()
+     ).subscribe((user)=>{
+       if(Object.entries(user).length !=0){
+           this.user = user as User;
+       }
+     })
   }
 
   ngOnDestroy(): void {
@@ -27,6 +28,4 @@ export class ProfilComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
-
 }

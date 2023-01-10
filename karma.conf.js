@@ -12,6 +12,9 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
+    files: [
+      'https://maps.googleapis.com/maps/api/js?key=<key>=places&language=enhttps://maps.google.com/maps/api/js?key=AIzaSyBJWo6uYGMRbWRW1H-wCsEoAU7xNoxZpFU&libraries=places'
+    ],
     client: {
       jasmine: {
         // you can add configuration options for Jasmine here

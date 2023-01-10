@@ -18,9 +18,9 @@ export class ProfilDeleteComponent implements OnInit {
   }
 
   deleteUser() {
-      this.userService.deleteUser(this.user.userId).subscribe(() => {
+      this.userService.deleteUser(this.user.userId!).subscribe(() => {
           this.dialog.closeAll();
-          this.router.navigateByUrl("/");
+          this.router.navigateByUrl("/").then();
       })
   }
 }

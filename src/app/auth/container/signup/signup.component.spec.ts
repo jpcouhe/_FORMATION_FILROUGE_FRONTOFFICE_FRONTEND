@@ -1,10 +1,10 @@
 import {createRoutingFactory, SpectatorRouting} from "@ngneat/spectator";
-import {LoginComponent} from "../login/login.component";
+
 import {MaterialModule} from "../../../shared/layouts/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconTestingModule} from "@angular/material/icon/testing";
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
-import {of} from "rxjs";
+
 import {SignupComponent} from "./signup.component";
 
 describe('Signing Checker', ()=> {

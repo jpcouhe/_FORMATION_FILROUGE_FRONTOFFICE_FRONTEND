@@ -1,4 +1,3 @@
-/*
 import { TestBed } from '@angular/core/testing';
 
 import { ValidityFormService } from './validity-form.service';
@@ -15,4 +14,3 @@ describe('ValidityFormService', () => {
     expect(service).toBeTruthy();
   });
 });
-*/

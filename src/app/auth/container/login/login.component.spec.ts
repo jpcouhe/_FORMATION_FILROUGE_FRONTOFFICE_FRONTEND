@@ -8,7 +8,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconTestingModule} from "@angular/material/icon/testing";
 
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
-import {of, throwError} from "rxjs";
+import {BehaviorSubject, of, throwError} from "rxjs";
+import {UserService} from "../../../shared/services/user-service/user.service";
+import {TestBed} from "@angular/core/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 
 
@@ -26,7 +29,11 @@ describe('Login Checker', ()=>{
     imports: [ MaterialModule,
       FormsModule,
       ReactiveFormsModule,
-      MatIconTestingModule],
+      MatIconTestingModule,
+      HttpClientTestingModule],
+    providers: [{
+      provide: UserService, userValue: {user$: new BehaviorSubject({})}
+    }],
     mocks: [AuthService],
 
   });

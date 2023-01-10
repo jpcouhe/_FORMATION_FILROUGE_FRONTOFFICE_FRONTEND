@@ -5,6 +5,7 @@ import {PlanningService} from "../../../shared/services/planning-service/plannin
 import {InteractService} from "../../../shared/services/interact-service/interact.service";
 import {BehaviorSubject, catchError, EMPTY, of, ReplaySubject, switchMap, tap} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Interaction} from "../../../shared/models/Interaction.model";
 
 @Component({
   selector: 'app-users-calendar-authorization',
@@ -13,27 +14,27 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class UsersCalendarAuthorizationComponent implements OnInit {
 
-  /*error: boolean = false*/
   error: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+
   authorizationForm: FormGroup = this.fb.group({
     read: [false],
     write: [false],
     modification: [false]
   })
-  interact!: any;
+
+  interact!: Interaction[];
   isExist!: boolean;
 
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private planningService: PlanningService, private dialog: MatDialog, private interactService: InteractService, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: { userId:number, planningId:number }, private planningService: PlanningService, private dialog: MatDialog, private interactService: InteractService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
 
-    this.interactService.findByUserAndPlanning(this.data.userId, this.data.planningId).subscribe((dataPermission) => {
-      console.log(dataPermission)
+    this.interactService.findByUserAndPlanning(this.data.userId, this.data.planningId).subscribe((dataPermission:Interaction[]) => {
+
       if (dataPermission.length > 0) {
         this.interact = dataPermission
-
         for (let i = 0; i < dataPermission.length; i++) {
 
           switch (this.interact[i].permissionsByPermissionId.permissionId) {
@@ -43,25 +44,21 @@ export class UsersCalendarAuthorizationComponent implements OnInit {
               })
               break;
             }
-
             case 2 : {
               this.authorizationForm.patchValue({
                 write: true
               })
               break;
             }
-
             case 3 : {
               this.authorizationForm.patchValue({
                 modification: true
               })
               break;
             }
-
             default: {
               break;
             }
-
           }
         }
       }
@@ -90,7 +87,8 @@ export class UsersCalendarAuthorizationComponent implements OnInit {
     }
 
     if (write === true) {
-      this.planningService.interactWithPlanning(this.data.userId, this.data.planningId, 2).pipe(catchError((err) => {
+      this.planningService.interactWithPlanning(this.data.userId, this.data.planningId, 2).pipe(
+        catchError(() => {
           this.error.next(true)
           return EMPTY
         })
@@ -118,7 +116,7 @@ export class UsersCalendarAuthorizationComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  selectionChange($event: any) {
+  RemoveWritAndModifIfReadIsFalse($event: any) {
       if($event.checked === false) {
         this.authorizationForm.patchValue({
           write: false,
@@ -127,6 +125,11 @@ export class UsersCalendarAuthorizationComponent implements OnInit {
       }
   }
 
-
-
+  setReadIfWriteAndModify($event: any) {
+    if ($event.checked === true) {
+      this.authorizationForm.patchValue({
+        read: true,
+      })
+    }
+  }
 }

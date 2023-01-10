@@ -14,10 +14,22 @@
   display: flex;
   align-items: center;
 
+  @include breakpoint(1200px) {
+    flex-direction: column;
+  }
+
 
   @include md{
 display: block;
     margin: 10px 10px 20px;
+  }
+}
+
+.container-title{
+  width: 100%;
+
+  @include md{
+    flex-direction: column;
   }
 }
 
@@ -45,12 +57,19 @@ display: block;
   width: 100%;
 }
 
+
 .calendar-header{
 /*  margin-top:20px;*/
   margin-left: 30px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   flex-direction: column;
+
+  @include lg{
+  flex-grow: 1;
+
+  }
 
   @include md{
     margin-top:30px;
@@ -59,17 +78,6 @@ display: block;
     margin-bottom: 30px;
   }
 
-/*  h1{
-    @include md{
-    text-align: center;
-    }
-  }
-
-  p{
-    @include md{
-      text-align: center;
-    }
-  }*/
 }
 
 .btn-shared{
@@ -82,14 +90,29 @@ display: block;
   a > button{
     margin-right: 0;
   }
+
+  @include  breakpoint(1200px){
+    margin-bottom: 10px;
+  }
+
   @include md{
-   display: flex;
     justify-content: center;
   }
 }
 
 full-calendar {
+
+  text-align: center;
+  .fc-direction-ltr .fc-toolbar>*>:not(:first-child) {
+    margin-top: 5px!important;
+  }
+    @include md {
+   /* flex-direction: column;
+    justify-content: center;*/
+    font-size: 80%;
+  }
   @include sm{
+    margin-top: 5px;
     font-size: 70%;
   }
 }

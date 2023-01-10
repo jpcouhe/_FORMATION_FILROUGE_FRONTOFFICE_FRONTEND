@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
   CalendarOptions,
-  EventApi,
   EventClickArg,
   EventHoveringArg
 } from "@fullcalendar/core";
@@ -24,7 +23,7 @@ import {PlanningService} from "../../shared/services/planning-service/planning.s
 import {MatSnackBar} from "@angular/material/snack-bar";
 import frLocale from '@Fullcalendar/core/locales/fr'
 import Tooltip from 'tooltip.js'
-
+import {EventEntity} from "../../shared/models/EventEntity.model";
 
 @Component({
   selector: 'app-calendar',
@@ -47,7 +46,7 @@ export class CalendarComponent implements OnInit{
       right: 'title'
     },
     footerToolbar:{
-      center : "dayGridMonth,timeGridWeek,timeGridDay prev,next today"
+      center : "dayGridMonth,timeGridWeek,timeGridDay, listWeek prev,next today"
     },
     customButtons:{
       addEventButton: {
@@ -63,10 +62,11 @@ export class CalendarComponent implements OnInit{
     eventClick: this.handleEventClick.bind(this),
     eventDrop: this.handleEvents.bind(this),
     eventResize:this.handleEvents.bind(this),
+    eventLongPressDelay: 1000,
     eventMouseEnter: (info) => this.displayTippy(info)
     ,
     eventColor: '#2C3E50',
-    eventTimeFormat: { // like '14:30:00'
+    eventTimeFormat: {
       hour: '2-digit',
       minute: '2-digit',
       meridiem: false
@@ -75,7 +75,6 @@ export class CalendarComponent implements OnInit{
 
   };
 
-  currentEvents: EventApi[] = [];
 
   event$:BehaviorSubject<any> = new BehaviorSubject<any>([])
 
@@ -94,12 +93,11 @@ export class CalendarComponent implements OnInit{
       tap((params) => {
         this.isParam = params
       }),
-      switchMap(async (isParam) => {
+      switchMap(async () => {
         if(Object.keys(this.isParam).length === 0 && this.isParam.constructor === Object){
           this.planningService.getPlanning(this.user.userId).subscribe((data) => {
             this.isShareCalendar = false;
             this.event$.next(data.eventsByPlanningId);
-            console.log(data.eventsByPlanningId)
           })
 
       }else {
@@ -107,8 +105,6 @@ export class CalendarComponent implements OnInit{
             this.isShareCalendar = true;
             this.shareCalendar = data;
             this.event$.next(data.eventsByPlanningId);
-            this.planningService.planningView$.next(data);
-            console.log(data)
           })
         }}),
       switchMap(()=>{
@@ -122,11 +118,7 @@ export class CalendarComponent implements OnInit{
         }
       })
       ).subscribe((data) => {
-      if(data.length >= 2){
-        this.errorMessage = false
-      }else{
-        this.errorMessage = true
-      }
+      this.errorMessage = data.length < 2;
     })
 
   }
@@ -143,13 +135,13 @@ export class CalendarComponent implements OnInit{
 
     if(this.route.snapshot.params['id']){
           this.userService.getIfUserHaveInteraction(this.route.snapshot.params['id'],this.user.userId).pipe(
-            map((data => data.filter((p: any) => p.permissionsByPermissionId.permissionId == 2)))
+            map((data => data.filter((p: any) => p.permissionsByPermissionId.permissionId == 3)))
           )
             .subscribe((data) => {
               if(data.length > 0){
                 this.displayModalToRemove(clickInfo)
               }else{
-             this.displayErrorMessage()
+             this.displayErrorMessage("Vous n'avez pas les droits d'accès")
               }
             })
     }else{
@@ -159,14 +151,24 @@ export class CalendarComponent implements OnInit{
   }
 
   handleEvents(events: any) {
-
-    this.eventService.updateEvent(events.event.id,events.event.title,events.event.start,events.event.end, events.event.extendedProps.description).subscribe((data) =>{
-      const eventList = this.event$.getValue();
-      const newList = eventList.filter((e:any) => e.id != events.event.id)
-      newList.push(data)
-      this.event$.next(newList)
-    })
-
+    if(this.route.snapshot.params['id']){
+      this.userService.getIfUserHaveInteraction(this.route.snapshot.params['id'], this.user.userId).pipe(
+        map((data => data.filter((p: any) => p.permissionsByPermissionId.permissionId == 3))),
+        switchMap((data:any) => {
+          if(data.length > 0){
+            return this.eventService.updateEvent(events.event.id,events.event.title,events.event.start,events.event.end, events.event.extendedProps.description)
+          }else{
+            this.displayErrorMessage("Vous ne pouvez pas effectuer de modification");
+            events.revert()
+            return EMPTY
+          }
+        })).subscribe((data:EventEntity)=>{
+        const eventList:EventEntity[] = this.event$.getValue();
+        const newList:EventEntity[] = eventList.filter((e:any) => e.id != events.event.id)
+        newList.push(data)
+        this.event$.next(newList)
+      })
+    }
   }
 
   openModal() {
@@ -179,7 +181,7 @@ export class CalendarComponent implements OnInit{
           if(data.length > 0){
             this.displayModalToCreate();
           }else{
-            this.displayErrorMessage();
+            this.displayErrorMessage("Vous n'avez pas les droits d'accès");
           }
         })
 
@@ -189,8 +191,8 @@ export class CalendarComponent implements OnInit{
 
   }
 
-  displayErrorMessage(){
-    this.snackBar.open("Vous n'avez les droits d'accès", 'Fermer', {
+  displayErrorMessage(message : string){
+    this.snackBar.open(message, 'Fermer', {
       duration:5000,
       verticalPosition:'top',
       panelClass: ['red-snackbar','login-snackbar'],
@@ -207,22 +209,23 @@ export class CalendarComponent implements OnInit{
     const ref = this.dialog.open(FormEventComponent, dialogConfig)
 
     if(this.route.snapshot.params['id'] !== undefined){
-      ref.afterClosed().subscribe((data:any) => {
+      ref.afterClosed().subscribe((data:EventEntity) => {
         if(data) {
           this.eventService.addEvent(data.title, data.start, data.end, data.description,this.route.snapshot.params['id'] ).subscribe((newEvent) => {
-            const eventList = this.event$.getValue();
-            const newList = [...eventList, newEvent]
+
+            const eventList:Event[] = this.event$.getValue();
+            const newList:Event[] = [...eventList, newEvent] as Event[]
             this.changeDetector.detectChanges()
             this.event$.next(newList)
           })
         }
       })
     }else{
-      ref.afterClosed().subscribe((data:any) => {
+      ref.afterClosed().subscribe((data:EventEntity) => {
         if(data) {
           this.eventService.addEvent(data.title, data.start, data.end,data.description, this.user.planningsByUserId[0].planningId).subscribe((newEvent) => {
             const eventList = this.event$.getValue();
-            const newList = [...eventList, newEvent]
+            const newList:Event[] = [...eventList, newEvent] as Event[]
             this.changeDetector.detectChanges()
             this.event$.next(newList)
           })

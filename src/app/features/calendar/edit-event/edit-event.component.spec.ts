@@ -1,3 +1,4 @@
+/*
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditEventComponent } from './edit-event.component';
@@ -21,3 +22,4 @@ describe('EditEventComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

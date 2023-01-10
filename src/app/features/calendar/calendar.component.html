@@ -1,26 +1,28 @@
 
   <div class="container-meteo-calendar">
     <div class="d-flex container-meteo-calendar__header">
-      <div class="d-flex flex-justify-content-center container-meteo-calendar__responsive ">
-        <app-meteo></app-meteo>
+      <div class="d-flex container-title">
+          <div class="d-flex flex-justify-content-center container-meteo-calendar__responsive ">
+            <app-meteo></app-meteo>
+          </div>
+          <div class="calendar-header" *ngIf="!isShareCalendar">
+            <h1>{{user.planningsByUserId[0].planningTitle}}</h1>
+            <p>{{user.planningsByUserId[0].planningDescription}}</p>
+          </div>
+          <div class="calendar-header" *ngIf="isShareCalendar">
+            <h1>{{shareCalendar.planningTitle}}</h1>
+            <p>{{shareCalendar.planningDescription}}</p>
+            <span class="shareCalendar">Vous n'étes pas le propriétaire de ce calendrier</span>
+            <span *ngIf="errorMessage" class=permission>Vous ne pouvez pas intéragir avec le calendrier, seul les droits de lecture vous ont été attribué</span>
+          </div>
       </div>
-      <div class="calendar-header" *ngIf="!isShareCalendar">
-        <h1>{{user.planningsByUserId[0].planningTitle}}</h1>
-        <p>{{user.planningsByUserId[0].planningDescription}}</p>
-      </div>
-      <div class="calendar-header" *ngIf="isShareCalendar">
-        <h1>{{shareCalendar.planningTitle}}</h1>
-        <p>{{shareCalendar.planningDescription}}</p>
-        <span class="shareCalendar">Vous n'étes pas le propriétaire de ce calendrier</span>
-        <span *ngIf="errorMessage" class=permission>Vous ne pouvez pas intéragir avec le calendrier, seul les droits de lecture vous ont été attribué</span>
-      </div>
-      <div *ngIf="!isShareCalendar" class="btn-shared">
+      <div *ngIf="!isShareCalendar" class="btn-shared d-flex">
         <button mat-raised-button color="primary" *ngIf="!isShareCalendar">Modifier</button>
         <a  [routerLink]="['/accueil/calendar/authorization']"><button mat-raised-button color="accent"><mat-icon class="mr-20">share</mat-icon>Partage</button></a>
       </div>
-
     </div>
       <div class="container-calendar">
-        <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" ></full-calendar>
+        <full-calendar [options]="calendarOptions" [deepChangeDetection]="true" [events]="event$ | async" class="calendar" >
+        </full-calendar>
       </div>
   </div>

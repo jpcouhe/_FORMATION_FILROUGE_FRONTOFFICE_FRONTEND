@@ -48,21 +48,23 @@
           <h2 class="mb-50">Titre du calendrier</h2>
           <mat-form-field floatLabel="never" class="form-input" >
             <mat-label>Titre</mat-label>
-            <input type="text" matInput data-cy-city name="title" formControlName="title" >
-            <mat-error>Titre requis</mat-error>
+            <input type="text" matInput data-cy-city name="title" formControlName="title">
+            <mat-error *ngIf="titleHasErrorMessage">{{titleHasErrorMessage}}</mat-error>
           </mat-form-field>
 
           <h2 class="mb-50">Description du calendrier</h2>
-          <mat-form-field floatLabel="never" appearance="outline" class="form-input">
-            <mat-label>Description</mat-label>
-            <textarea matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5" formControlName="description"></textarea>
-            <mat-error>Ce champ est requis</mat-error>
-          </mat-form-field>
-          <mat-error></mat-error>
+            <mat-form-field floatLabel="never" appearance="outline" class="form-input charLength-input">
+              <mat-label>Description</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5" formControlName="description"
+                        (input)="setValueDescription($event)" maxlength="100">
+              </textarea>
+              <span class="charLength-input__number">{{ descriptionCharLength }}</span>
+              <mat-error *ngIf="descriptionHasErrorMessage">{{descriptionHasErrorMessage}}</mat-error>
+            </mat-form-field>
           <button [disabled]="updateForm.invalid || updateForm.untouched" mat-raised-button color="primary" data-cy-inscription type="submit" (click)="onSubmit()" class="btn-next">Suivant</button>
         </form>
       </div>

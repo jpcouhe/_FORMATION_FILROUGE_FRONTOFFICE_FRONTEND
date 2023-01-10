@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../shared/services/auth-service/auth.service";
 import {Router} from "@angular/router";
-import {catchError, EMPTY, of} from "rxjs";
+import {catchError, EMPTY} from "rxjs";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SignupComponent} from "../signup/signup.component";
-import {FormEventComponent} from "../../../features/calendar/form-event/form-event.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../../../shared/services/user-service/user.service";
 
@@ -15,10 +14,11 @@ import {UserService} from "../../../shared/services/user-service/user.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public form: FormGroup = this.fb.group({
+  form: FormGroup = this.fb.group({
     email: ['',  [Validators.required, Validators.email]],
     password: ['', Validators.required]
   })
+
   error!: string;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private dialog: MatDialog, private snackBar:MatSnackBar, private userService: UserService) { }
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
 
 
 public submit() {
+
   if(this.form.valid){
     const email =  this.form.get("email")!.value;
     const password =  this.form.get("password")!.value;
@@ -43,7 +44,7 @@ public submit() {
         return EMPTY
       })).subscribe((user) => {
         this.userService.user$.next(user)
-         this.router.navigateByUrl('/accueil/calendar')
+        this.router.navigateByUrl('/accueil/calendar')
     })
   }
   }
