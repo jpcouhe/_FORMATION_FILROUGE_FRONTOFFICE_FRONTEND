@@ -15,8 +15,13 @@ export class AuthService {
   private userId:String = '';
   private isLoggedIn:boolean = false;
   private access_token: String = '';
+
+
+
   constructor(private http: HttpClient) {
   }
+
+
 
   public login(userEmail: string, userPassword: string): Observable<User> {
     let userCredential={userEmail,userPassword }

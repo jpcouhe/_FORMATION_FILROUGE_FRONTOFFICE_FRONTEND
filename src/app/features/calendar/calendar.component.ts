@@ -84,8 +84,12 @@ export class CalendarComponent implements OnInit{
   isParam!:any
   errorMessage!: boolean;
   tooltip!: any;
+
+  userNameShareCalendar!:string | null;
+  userFirstNameShareCalendar!:string | null;
   constructor( private route: ActivatedRoute, private changeDetector: ChangeDetectorRef, private dialog: MatDialog, private router: Router, private eventService: EventService, private userService: UserService, private authService: AuthService, private planningService: PlanningService, private snackBar:MatSnackBar) {
   }
+
 
   ngOnInit(): void {
     this.user = this.authService.auth$.getValue()
@@ -101,8 +105,13 @@ export class CalendarComponent implements OnInit{
           })
 
       }else {
+
+          this.userNameShareCalendar =this.route.snapshot.queryParamMap.get("userName")
+          this.userFirstNameShareCalendar =  this.route.snapshot.queryParamMap.get("userFirstname")
+
           this.planningService.getPlanningById(this.isParam.id).subscribe((data) => {
             this.isShareCalendar = true;
+            console.log(data)
             this.shareCalendar = data;
             this.event$.next(data.eventsByPlanningId);
           })
@@ -163,6 +172,13 @@ export class CalendarComponent implements OnInit{
             return EMPTY
           }
         })).subscribe((data:EventEntity)=>{
+        const eventList:EventEntity[] = this.event$.getValue();
+        const newList:EventEntity[] = eventList.filter((e:any) => e.id != events.event.id)
+        newList.push(data)
+        this.event$.next(newList)
+      })
+    }else{
+      this.eventService.updateEvent(events.event.id,events.event.title,events.event.start,events.event.end, events.event.extendedProps.description).subscribe((data:EventEntity)=>{
         const eventList:EventEntity[] = this.event$.getValue();
         const newList:EventEntity[] = eventList.filter((e:any) => e.id != events.event.id)
         newList.push(data)

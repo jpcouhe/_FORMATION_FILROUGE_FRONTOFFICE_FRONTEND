@@ -15,18 +15,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private AuthService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // todo vérifier ?
-/*
-    if(request.headers.has("skip")){
-      console.log("salut")
-      console.log(request)
-      const newRequest = request.clone({
-        headers: request.headers.delete("skip")
-      })
-      console.log(newRequest)
-      return next.handle(newRequest);
-    }
-*/
 
     if(request.url.includes('openweather')){
         return next.handle(request)
@@ -41,3 +29,17 @@ export class AuthInterceptor implements HttpInterceptor {
 }
 
 export const AuthInterceptorProviders = [  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}];
+
+
+// todo vérifier ?
+/*
+    if(request.headers.has("skip")){
+      console.log("salut")
+      console.log(request)
+      const newRequest = request.clone({
+        headers: request.headers.delete("skip")
+      })
+      console.log(newRequest)
+      return next.handle(newRequest);
+    }
+*/

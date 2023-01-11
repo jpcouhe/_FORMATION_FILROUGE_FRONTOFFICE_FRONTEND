@@ -8,4 +8,6 @@ export interface Planning {
   planningCreatedAt:string;
   eventsByPlanningId:EventEntity[],
   userId:string;
+  userName?:string;
+  userFirstname?:string;
 }

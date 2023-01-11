@@ -15,8 +15,8 @@
             <mat-icon class="icon " [matMenuTriggerFor]="menuCalendar">expand_more</mat-icon>
           </button>
           <mat-menu #menuCalendar="matMenu" yPosition="below" xPosition="before">
-            <button mat-menu-item *ngFor="let planning of planningWithInteraction" (click)="goToSharedCalendar(planning.planningsByPlanningId.planningId)">
-              <span>{{planning.planningsByPlanningId.planningTitle}}</span>
+              <button mat-menu-item *ngFor="let planning of planningWithInteraction" (click)="goToSharedCalendar(planning.planningsByPlanningId.planningId, planning.planningsByPlanningId.userFirstname, planning.planningsByPlanningId.userName)" >
+              <span>Calendrier de : {{planning.planningsByPlanningId.userName | titlecase}} {{planning.planningsByPlanningId.userFirstname | titlecase}}</span>
             </button>
           </mat-menu>
         </div>

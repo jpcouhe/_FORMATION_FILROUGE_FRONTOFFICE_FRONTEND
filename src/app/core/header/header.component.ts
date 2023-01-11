@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Interaction} from "../../shared/models/Interaction.model";
 import {tap} from "rxjs";
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit, OnChanges{
       }
     })
     this.userService.getPlanningWithInteraction(this.user.userId).subscribe((data)=>{
+      console.log(data)
       this.planningWithInteraction = data
       this.displaySharedCalender = this.planningWithInteraction.length != 0;
     })
@@ -48,8 +50,9 @@ export class HeaderComponent implements OnInit, OnChanges{
     this.route.navigateByUrl("/").then()
   }
 
-  goToSharedCalendar(planningId: any) {
-      this.route.navigateByUrl("accueil/calendar/" + planningId).then()
+  goToSharedCalendar(planningId: any, name: string | undefined, firstname: string | undefined) {
+      // this.route.navigateByUrl("accueil/calendar/" + planningId).then()
+    this.route.navigate(['/accueil/calendar', planningId], {queryParams: {userName:name,userFirstname:firstname}})
   }
 
   ngOnChanges(): void {

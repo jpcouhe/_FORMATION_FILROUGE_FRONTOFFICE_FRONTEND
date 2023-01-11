@@ -10,6 +10,7 @@
             <p>{{user.planningsByUserId[0].planningDescription}}</p>
           </div>
           <div class="calendar-header" *ngIf="isShareCalendar">
+            <span class="shareCalendar-credentials">Calendrier de {{userFirstNameShareCalendar}} {{userNameShareCalendar}}</span>
             <h1>{{shareCalendar.planningTitle}}</h1>
             <p>{{shareCalendar.planningDescription}}</p>
             <span class="shareCalendar">Vous n'étes pas le propriétaire de ce calendrier</span>

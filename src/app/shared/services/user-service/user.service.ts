@@ -14,6 +14,21 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  getUserById(userId:string): Observable<User>{
+    return this.http.get<User>("http://localhost:8080/api/users/" + userId).pipe(tap((user)=>{
+        this.authService.auth$.next(user)
+    }))
+  }
+
+  getAllUsers(filterId: any): Observable<User[]>{
+    return this.http.get<User[]>("http://localhost:8080/api/users").pipe(
+        map((users => users.filter((user: any) => user.userId !== filterId)))
+    )
+  }
+
+  deleteUser(userId: string): Observable<{ message:string }>{
+    return this.http.delete<{message:string}>("http://localhost:8080/api/users/delete/" + userId)
+  }
   updateUser(userId: string, userName: string, userFirstname: string, userCity: string, userPicture: string | File): Observable<{ message:string }> {
 
     const formData = new FormData();
@@ -36,17 +51,7 @@ export class UserService {
     return this.http.put<{message: string}>("http://localhost:8080/api/users/" + userId, formData)
   }
 
-  getUserById(userId:string): Observable<User>{
-    return this.http.get<User>("http://localhost:8080/api/users/" + userId).pipe(tap((user)=>{
-        this.authService.auth$.next(user)
-    }))
-  }
 
-  getAllUsers(filterId: any): Observable<User[]>{
-    return this.http.get<User[]>("http://localhost:8080/api/users").pipe(
-        map((users => users.filter((user: any) => user.userId !== filterId)))
-    )
-  }
 
   updateUserPassword(userId: string, userOldPassword: String, userNewPassword: String): Observable<{message:string}>{
 
@@ -56,12 +61,6 @@ export class UserService {
     }
     return this.http.put<{ message: string }>("http://localhost:8080/api/users/password/" + userId, credential)
   }
-
-  deleteUser(userId: string): Observable<{ message:string }>{
-    return this.http.delete<{message:string}>("http://localhost:8080/api/users/delete/" + userId)
-  }
-
-
 
   getPlanningWithInteraction(userId: any): Observable<Interaction[]>{
     return this.http.get<Interaction[]>("http://localhost:8080/api/interact/user/" + userId)
