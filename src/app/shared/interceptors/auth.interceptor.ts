@@ -12,11 +12,13 @@ import {AuthService} from "../services/auth-service/auth.service";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
+  private urlOpenWeather:string = "openweather"
+
   constructor(private AuthService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if(request.url.includes('openweather')){
+    if(request.url.includes(this.urlOpenWeather)){
         return next.handle(request)
     }else{
          const authToken = this.AuthService.getToken();

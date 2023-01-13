@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  openWeatherApi: "a8d6c44e712048000db043276e5b5b57"
+  openWeatherApi: "a8d6c44e712048000db043276e5b5b57",
+  addressBackendServer: "http://localhost:8080",
 };
 
 /*
